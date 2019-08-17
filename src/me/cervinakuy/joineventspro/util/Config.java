@@ -16,11 +16,11 @@ public class Config {
 		
 	}
 
-	public static List<String> translateList(List<String> oldList) {
+	public static List<String> translateList(List<String> list) {
 		
 		List<String> translatedList = new ArrayList<String>();
 		
-		for (String string: oldList) {
+		for (String string: list) {
 			
 			translatedList.add(ChatColor.translateAlternateColorCodes('&', string.replace("%newline%", "\n")));
 			
