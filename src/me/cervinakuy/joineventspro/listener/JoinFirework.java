@@ -32,15 +32,15 @@ public class JoinFirework implements Listener {
 		    int result = random.nextInt(4) + 1;
 
 		    if (result == 1) {
-			type = FireworkEffect.Type.BALL;
+		    	type = FireworkEffect.Type.BALL;
 		    } else if (result == 2) {
-			type = FireworkEffect.Type.BALL_LARGE;
+		    	type = FireworkEffect.Type.BALL_LARGE;
 		    } else if (result == 3) {
-			type = FireworkEffect.Type.BURST;
+		    	type = FireworkEffect.Type.BURST;
 		    } else if (result == 4) {
-			type = FireworkEffect.Type.CREEPER;
+		    	type = FireworkEffect.Type.CREEPER;
 		    } else if (result == 5) {
-			type = FireworkEffect.Type.STAR;
+		    	type = FireworkEffect.Type.STAR;
 		    }
 
 		    random.nextInt(17);

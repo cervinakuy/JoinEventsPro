@@ -2,7 +2,6 @@ package me.cervinakuy.joineventspro.listener;
 
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -42,10 +41,9 @@ public class JoinItems implements Listener {
 						ItemStack item = new ItemStack(Material.valueOf(Config.getString(joinType + ".Items." + items + ".Material")), Config.getInteger(joinType + ".Items." + items + ".Amount"));
 						ItemMeta itemMeta = item.getItemMeta();
 						
-						itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Config.getString(joinType + ".Items." + items + ".Name")));
+						itemMeta.setDisplayName(Config.getString(joinType + ".Items." + items + ".Name"));
 						
-						List<String> lore = Config.getConfiguration().getStringList(joinType + ".Items." + items + ".Lore");
-						lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
+						List<String> lore = Config.translateList(Config.getConfiguration().getStringList(joinType + ".Items." + items + ".Lore"));
 						itemMeta.setLore(lore);
 						
 						item.setItemMeta(itemMeta);
