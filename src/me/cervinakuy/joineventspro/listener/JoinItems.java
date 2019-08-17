@@ -71,7 +71,7 @@ public class JoinItems implements Listener {
 			
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
 				
-				if (p.getItemInHand().hasItemMeta()) {
+				if (Toolkit.getMainHandItem(p).hasItemMeta()) {
 					
 					ConfigurationSection section = Config.getConfiguration().getConfigurationSection(joinType + ".Items");
 					
@@ -79,9 +79,9 @@ public class JoinItems implements Listener {
 						
 						if (!(items.equals("Enabled"))) {
 							
-							if (p.getItemInHand().getType() == Material.valueOf(Config.getString(joinType + ".Items." + items + ".Material"))) {
+							if (Toolkit.getMainHandItem(p).getType() == Material.valueOf(Config.getString(joinType + ".Items." + items + ".Material"))) {
 								
-								if (p.getItemInHand().getItemMeta().getDisplayName().equals(Config.getString(joinType + ".Items." + items + ".Name"))) {
+								if (Toolkit.getMainHandItem(p).getItemMeta().getDisplayName().equals(Config.getString(joinType + ".Items." + items + ".Name"))) {
 									
 									Toolkit.runCommands(p, joinType + ".Items." + items);
 									

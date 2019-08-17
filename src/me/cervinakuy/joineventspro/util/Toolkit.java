@@ -2,6 +2,7 @@ package me.cervinakuy.joineventspro.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 
@@ -49,5 +50,58 @@ public class Toolkit {
 		}
 		
 	}
+	
+ 	private static int versionToNumber() {
+ 		
+ 		if (Bukkit.getVersion().contains("1.8")) {
+ 			
+ 			return 18;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.9")) {
+ 			
+ 			return 19;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.10")) {
+ 			
+ 			return 110;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.11")) {
+ 			
+ 			return 111;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.12")) {
+ 			
+ 			return 112;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.13")) {
+ 			
+ 			return 113;
+ 			
+ 		} else if (Bukkit.getVersion().contains("1.14")) {
+ 			
+ 			return 114;
+ 			
+ 		}
+ 		
+ 		return -1;
+ 		
+ 	}
+	
+ 	@SuppressWarnings("deprecation")
+	public static ItemStack getMainHandItem(Player p) {
+ 		
+ 		if (versionToNumber() == 18) {
+ 			
+ 			return p.getItemInHand();
+ 			
+ 		} else if (versionToNumber() > 18) {
+ 			
+ 			return p.getInventory().getItemInMainHand();
+ 			
+ 		}
+ 		
+ 		return p.getItemInHand();
+ 		
+ 	}
 
 }
