@@ -151,7 +151,11 @@ public class MainCommand implements CommandExecutor {
 						
 						if (StringUtils.isNumeric(args[1])) {
 							
-							plugin.getConfig().set("Server.Players.Max", args[1]);
+							if (Config.getBoolean("Server.Players.Unlimited")) {
+								Config.getConfiguration().set("Server.Players.Unlimited", false);
+							}
+							
+							plugin.getConfig().set("Server.Players.Max", Integer.parseInt(args[1]));
 							plugin.saveConfig();
 							
 							p.sendMessage(Config.getString("Messages.Commands.Players").replace("%number%", args[1]));
