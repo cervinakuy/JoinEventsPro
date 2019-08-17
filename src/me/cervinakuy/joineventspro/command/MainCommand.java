@@ -160,24 +160,14 @@ public class MainCommand implements CommandExecutor {
 							
 						} else if (args[0].equalsIgnoreCase("maintenance")) {
 							
-							if (Config.getBoolean("Server.MOTD.Maintenance.Enabled")) {
-								
-								plugin.getConfig().set("Server.MOTD.Maintenance.Enabled", false);
-								plugin.saveConfig();
-								
-								p.sendMessage(Config.getString("Messages.Commands.MaintenanceOff"));
-								p.playSound(p.getLocation(), Sounds.IRONGOLEM_HIT.bukkitSound(), 1, -1);
-								
-							} else {
-								
-								plugin.getConfig().set("Server.MOTD.Maintenance.Enabled", true);
-								plugin.saveConfig();
-								
-								p.sendMessage(Config.getString("Messages.Commands.MaintenanceOn"));
-								p.playSound(p.getLocation(), Sounds.IRONGOLEM_HIT.bukkitSound(), 1, -1);
-								
-							}
+							boolean maintenance = Config.getBoolean("Server.MOTD.Maintenance.Enabled");
 							
+							plugin.getConfig().set("Server.MOTD.Maintenance.Enabled", !maintenance);
+							plugin.saveConfig();
+							
+							p.sendMessage(Config.getString(maintenance ? "Messages.Commands.MaintenanceOff" : "Messages.Commands.MaintenanceOn"));
+							p.playSound(p.getLocation(), Sounds.IRONGOLEM_HIT.bukkitSound(), 1, -1);
+
 						} else {
 							
 							p.sendMessage(Config.getString("Messages.Commands.Unknown"));
