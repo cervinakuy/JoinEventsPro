@@ -5,6 +5,7 @@ version: 3.8
 description: Completely manage and customize every event that happens when a player joins.
 website: https://www.spigotmc.org/resources/22105/
 softdepend: [PlaceholderAPI]
+api-version: 1.14
 
 commands:
    joineventspro:
