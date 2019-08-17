@@ -19,8 +19,6 @@ public class JoinFirework implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		
-		
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore()) ? "FirstJoin" : "Join";
 		
