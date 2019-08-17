@@ -2,7 +2,6 @@ package me.cervinakuy.joineventspro.listener;
 
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.cervinakuy.joineventspro.util.Config;
 import me.cervinakuy.joineventspro.util.Toolkit;
+import me.cervinakuy.joineventspro.util.XMaterial;
 
 public class JoinItems implements Listener {
 	
@@ -38,7 +38,7 @@ public class JoinItems implements Listener {
 					
 					if (p.hasPermission(Config.getString(joinType + ".Items." + items + ".Permission"))) {
 						
-						ItemStack item = new ItemStack(Material.valueOf(Config.getString(joinType + ".Items." + items + ".Material")), Config.getInteger(joinType + ".Items." + items + ".Amount"));
+						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).parseMaterial(), Config.getInteger(joinType + ".Items." + items + ".Amount"));
 						ItemMeta itemMeta = item.getItemMeta();
 						
 						itemMeta.setDisplayName(Config.getString(joinType + ".Items." + items + ".Name"));
@@ -48,7 +48,7 @@ public class JoinItems implements Listener {
 						
 						item.setItemMeta(itemMeta);
 						
-						p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), new ItemStack(Material.AIR));
+						p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), XMaterial.AIR.parseItem());
 						p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), item);
 						
 					}
@@ -79,7 +79,7 @@ public class JoinItems implements Listener {
 						
 						if (!(items.equals("Enabled"))) {
 							
-							if (Toolkit.getMainHandItem(p).getType() == Material.valueOf(Config.getString(joinType + ".Items." + items + ".Material"))) {
+							if (Toolkit.getMainHandItem(p).getType() == XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).parseMaterial()) {
 								
 								if (Toolkit.getMainHandItem(p).getItemMeta().getDisplayName().equals(Config.getString(joinType + ".Items." + items + ".Name"))) {
 									
