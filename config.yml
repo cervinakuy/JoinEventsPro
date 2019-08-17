@@ -1,0 +1,165 @@
+FirstJoin:
+  Message:
+    Message: '&7[&6&l+&7] &7Welcome &b%player% &7to our server. This message supports PlaceholderAPI.'
+    Enabled: true
+  Sound:
+    Sound: 'AMBIENCE_THUNDER'
+    Pitch: 1
+    Enabled: true
+  Commands:
+    Commands:
+    - 'console: All commands in this plugin have PlaceholderAPI support'
+    - 'console: This command is run from the console, you may use %player%'
+    - 'player: This command is run from the player, you may use %player%'
+    Enabled: false
+  MOTD:
+    Lines:
+    - '&f&m                                                                  '
+    - ' '
+    - ' &a&lWelcome to our Network!'
+    - ' &7Here at our server, we create quality gameplay'
+    - ' &7for all sorts of players. This message supports PlaceholderAPI.'
+    - ' '
+    - ' &eWebsite &fwww.mynetwork.com'
+    - ' &eStore &fstore.mynetwork.com'
+    - ' '
+    - '&f&m                                                                  '
+    Enabled: true
+  Book:
+    Information:
+      Slot: 4
+      Title: 'Welcome to our Network!'
+      Author: 'Cervinakuy'
+    Pages:
+    - '&a&lWelcome to our Network!%newline%&7This is a custom book made using the plugin &bJoinEventsPro&7.%newline%%newline%&7You can customize these pages in the config.yml.'
+    - '&a&lPage 2%newline%&7This is an example of a second page.'
+    Enabled: true
+  Items:
+    Diamond:
+      Name: '&aFirst Join Diamond'
+      Material: DIAMOND
+      Permission: jep.items.diamond
+      Slot: 0
+      Amount: 1
+      Lore:
+      - '&7Welcome to our Network!'
+      - '&7Please take this welcome'
+      - '&7diamond.'
+    Enabled: false
+  Other:
+    Firework: true
+
+Join:
+  Message:
+    Message: '&7[&a&l+&7] &7&b%player% &7joined the server. This message supports PlaceholderAPI.'
+    Enabled: true
+  Sound:
+    Sound: 'ITEM_PICKUP'
+    Pitch: 1
+    Enabled: true
+  Commands:
+    Commands:
+    - 'console: All commands in this plugin have PlaceholderAPI support'    
+    - 'console: This command is run from the console, you may use %player%'
+    - 'player: This command is run from the player, you may use %player%'
+    Enabled: false
+  MOTD:
+    Lines:
+    - '&f&m                                                                   '
+    - ' '
+    - ' &6&lWelcome back to our Network!'
+    - ' &7Here at our server, we create quality gameplay'
+    - ' &7for all sorts of players. This message supports PlaceholderAPI.'
+    - ' '
+    - ' &eWebsite &fwww.mynetwork.com'
+    - ' &eStore &fstore.mynetwork.com'
+    - ' '
+    - '&f&m                                                                   '
+    Enabled: true
+  Book:
+    Information:
+      Slot: 4
+      Title: 'Welcome back to our Network!'
+      Author: 'Cervinakuy'
+    Pages:
+    - '&a&lWelcome back to our Network!%newline%&7This is a custom book made using the plugin &bJoinEventsPro&7.%newline%%newline%&7You can customize these pages in the config.yml.'
+    - '&a&lPage 2%newline%&7This is an example of a second page.'
+    Enabled: true
+  Items:
+    Selector:
+      Name: '&aServer Selector &7(Right Click)'
+      Slot: 0
+      Amount: 1
+      Permission: jep.items.selector
+      Material: COMPASS
+      Lore:
+      - '&7This is our server selector.'
+      Commands:
+      - 'player: servers'
+    Pickaxe:
+      Name: '&aDefault Pickaxe'
+      Slot: 1
+      Amount: 1
+      Permission: jep.items.pickaxe
+      Material: IRON_PICKAXE
+      Lore:
+      - '&7This is a pickaxe.'
+    Enabled: false
+  Other:
+    Firework: true
+
+Leave:
+  Message:
+    Message: '&7[&c&l-&7] &b%player% &7left the server. This message supports PlaceholderAPI.'
+    Enabled: true
+  Sound:
+    Sound: 'NOTE_BASS'
+    Pitch: 1
+    Enabled: true
+  Commands:
+    Commands:
+    - 'console: All commands in this plugin have PlaceholderAPI support'
+    - 'console: This command is run from the console, you may use %player%'
+    - 'player: This command is run from the player, you may use %player%'
+    Enabled: false
+
+Server:
+  MOTD:
+    Normal:
+      Line-1: '&a&lMinecraft Network &7Now with &eJoinEventsPro!'
+      Line-2: '&7This is a customizable second line of the MOTD.'
+      Enabled: true
+    Maintenance:
+      Line-1: '&c&lMinecraft Network &7Now with &eJoinEventsPro!'
+      Line-2: '&7This is a customizable second line of the MOTD.'
+      Enabled: false
+  Messages:
+    Full: '&7[&b&lJOINEVENTSPRO&7] &cThe server is currently full, please check back later.'
+    Maintenance: '&7[&b&lJOINEVENTSPRO&7] &cThe server is currently undergoing Maintenance, please check back later.'
+  Players:
+    Unlimited: true
+    Max: 100
+
+Messages:
+  General:
+    Prefix: '&7[&b&lJOINEVENTSPRO&7]'
+    Permission: '%prefix% &cYou do not have permission to execute that command.'
+    Player: '%prefix% &cYou must be a player to perform this action.'
+  Commands:
+    Reload: '%prefix% &7Successfully reloaded the configuration.'
+    Teleported: '%prefix% &7You teleported to the &b%type%&7.'
+    Spawn: '%prefix% &7Successfully set the &b%type%&7.'
+    MaintenanceOn: '%prefix% &7Server Maintenance is now &eENABLED&7.'
+    MaintenanceOff: '%prefix% &7Server Maintenance is now &cDISABLED&7.'
+    Players: '%prefix% &7The player limit is now &b%number% players&7.'
+    Unknown: '%prefix% &cUnknown command. Type /jep help for help.'
+  Error:
+    Spawn: '%prefix% &cThere is no %type% Location set.'
+    Number: '%prefix% &cThe argument specified was not an integer.'
+    
+Spawn:
+  First:
+    Enabled: true
+  Join:
+    Enabled: true
+    

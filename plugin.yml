@@ -1,0 +1,12 @@
+name: JoinEventsPro
+author: Cervinakuy
+main: me.cervinakuy.joineventspro.Game
+version: 3.7
+description: Completely manage and customize every event that happens when a player joins.
+website: https://www.spigotmc.org/resources/22105/
+softdepend: [PlaceholderAPI]
+
+commands:
+   joineventspro:
+     description: Main command for JoinEventsPro.
+     aliases: [jep]
