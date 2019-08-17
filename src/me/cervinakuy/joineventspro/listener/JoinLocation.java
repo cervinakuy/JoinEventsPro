@@ -21,7 +21,7 @@ public class JoinLocation implements Listener {
 			
 			if (Config.getConfiguration().contains("Spawn." + joinType + ".World") && p.hasPermission("jep." + joinType.toLowerCase() + ".location")) {
 				
-				Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn" + joinType + ".World")),
+				Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn." + joinType + ".World")),
 						Config.getInteger("Spawn." + joinType + ".X") + 0.5,
 						Config.getInteger("Spawn." + joinType + ".Y"),
 						Config.getInteger("Spawn." + joinType + ".Z") + 0.5,
