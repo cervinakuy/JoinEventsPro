@@ -65,88 +65,51 @@ public class MainCommand implements CommandExecutor {
 							p.sendMessage(Config.getString("Messages.Commands.Reload"));
 							p.playSound(p.getLocation(), Sounds.ORB_PICKUP.bukkitSound(), 1, 1);
 							
-						} else if (args[0].equalsIgnoreCase("firstjoinmotd")) {
+						} else if (args[0].equalsIgnoreCase("firstjoinmotd") || args[0].equalsIgnoreCase("joinmotd")) {
 							
-							for (String lines : Config.getStringList("FirstJoin.MOTD.Lines")) {
+							String joinType = args[0].equalsIgnoreCase("firstjoinmotd") ? "FirstJoin" : "Join";
+							
+							for (String lines : Config.getStringList(joinType + ".MOTD.Lines")) {
 								p.sendMessage(Config.translate(lines));
 							}
 							
 							p.playSound(p.getLocation(), Sounds.ITEM_PICKUP.bukkitSound(), 1, 1);
 							
-						} else if (args[0].equalsIgnoreCase("joinmotd")) {
+						} else if (args[0].equalsIgnoreCase("setfirstjoinlocation") || args[0].equalsIgnoreCase("setjoinlocation")) {
 							
-							for (String lines : Config.getStringList("Join.MOTD.Lines")) {
-								p.sendMessage(Config.translate(lines));
-							}
+							String joinType = args[0].equalsIgnoreCase("setfirstjoinlocation") ? "First" : "Join";
 							
-							p.playSound(p.getLocation(), Sounds.ITEM_PICKUP.bukkitSound(), 1, 1);
-							
-						} else if (args[0].equalsIgnoreCase("setfirstjoinlocation")) {
-							
-							plugin.getConfig().set("Spawn.First.World", p.getWorld().getName());
-							plugin.getConfig().set("Spawn.First.X", p.getLocation().getBlockX());
-							plugin.getConfig().set("Spawn.First.Y", p.getLocation().getBlockY());
-							plugin.getConfig().set("Spawn.First.Z", p.getLocation().getBlockZ());
-							plugin.getConfig().set("Spawn.First.Yaw", p.getLocation().getYaw());
-							plugin.getConfig().set("Spawn.First.Pitch", p.getLocation().getPitch());
+							plugin.getConfig().set("Spawn." + joinType + ".World", p.getWorld().getName());
+							plugin.getConfig().set("Spawn." + joinType + ".X", p.getLocation().getBlockX());
+							plugin.getConfig().set("Spawn." + joinType + ".Y", p.getLocation().getBlockY());
+							plugin.getConfig().set("Spawn." + joinType + ".Z", p.getLocation().getBlockZ());
+							plugin.getConfig().set("Spawn." + joinType + ".Yaw", p.getLocation().getYaw());
+							plugin.getConfig().set("Spawn." + joinType + ".Pitch", p.getLocation().getPitch());
 							plugin.saveConfig();
 							
-							p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", "First Join Location"));
+							p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
 							p.playSound(p.getLocation(), Sounds.LEVEL_UP.bukkitSound(), 1, 1);
 							
-						} else if (args[0].equalsIgnoreCase("setjoinlocation")) {
+						} else if (args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation")) {	
 							
-							plugin.getConfig().set("Spawn.Join.World", p.getWorld().getName());
-							plugin.getConfig().set("Spawn.Join.X", p.getLocation().getBlockX());
-							plugin.getConfig().set("Spawn.Join.Y", p.getLocation().getBlockY());
-							plugin.getConfig().set("Spawn.Join.Z", p.getLocation().getBlockZ());
-							plugin.getConfig().set("Spawn.Join.Yaw", p.getLocation().getYaw());
-							plugin.getConfig().set("Spawn.Join.Pitch", p.getLocation().getPitch());
-							plugin.saveConfig();
+							String joinType = args[0].equalsIgnoreCase("firstjoinlocation") ? "First" : "Join";
 							
-							p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", "Join Location"));
-							p.playSound(p.getLocation(), Sounds.LEVEL_UP.bukkitSound(), 1, 1);
-							
-						} else if (args[0].equalsIgnoreCase("firstjoinlocation")) {	
-							
-							if (Config.getConfiguration().contains("Spawn.First.World")) {
+							if (Config.getConfiguration().contains("Spawn." + joinType + ".World")) {
 								
-								Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn.First.World")),
-										Config.getInteger("Spawn.First.X") + 0.5,
-										Config.getInteger("Spawn.First.Y"),
-										Config.getInteger("Spawn.First.Z") + 0.5,
-										Config.getInteger("Spawn.First.Yaw"),
-										Config.getInteger("Spawn.First.Pitch"));
+								Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn." + joinType + ".World")),
+										Config.getInteger("Spawn." + joinType + ".X") + 0.5,
+										Config.getInteger("Spawn." + joinType + ".Y"),
+										Config.getInteger("Spawn." + joinType + ".Z") + 0.5,
+										Config.getInteger("Spawn." + joinType + ".Yaw"),
+										Config.getInteger("Spawn." + joinType + ".Pitch"));
 								p.teleport(spawn);
 								
 								p.playSound(p.getLocation(), Sounds.ENDERMAN_TELEPORT.bukkitSound(), 1, 1);
-								p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", "First Join Location"));
+								p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
 								
 							} else {
 								
-								p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", "First Join"));
-								p.playSound(p.getLocation(), Sounds.ENDERDRAGON_HIT.bukkitSound(), 1, 1);
-								
-							}
-							
-						} else if (args[0].equalsIgnoreCase("joinlocation")) {	
-							
-							if (Config.getConfiguration().contains("Spawn.Join.World")) {
-								
-								Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn.Join.World")),
-										Config.getInteger("Spawn.Join.X") + 0.5,
-										Config.getInteger("Spawn.Join.Y"),
-										Config.getInteger("Spawn.Join.Z") + 0.5,
-										Config.getInteger("Spawn.Join.Yaw"),
-										Config.getInteger("Spawn.Join.Pitch"));
-								p.teleport(spawn);
-								
-								p.playSound(p.getLocation(), Sounds.ENDERMAN_TELEPORT.bukkitSound(), 1, 1);
-								p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", "Join Location"));
-								
-							} else {
-								
-								p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", "Join"));
+								p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
 								p.playSound(p.getLocation(), Sounds.ENDERDRAGON_HIT.bukkitSound(), 1, 1);
 								
 							}
