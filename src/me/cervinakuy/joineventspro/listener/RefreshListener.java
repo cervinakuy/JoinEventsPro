@@ -14,39 +14,16 @@ public class RefreshListener implements Listener {
 		
 		if (Config.getBoolean("Server.MOTD.Normal.Enabled")) {
 			
-			if (!Config.getBoolean("Server.MOTD.Maintenance.Enabled")) {
-				
-				String line1 = Config.getString("Server.MOTD.Normal.Line-1");
-				String line2 = Config.getString("Server.MOTD.Normal.Line-2");
-				
-				line1 = line1.replace("&", "\\u00A7");
-				line2 = line2.replace("&", "\\u00A7");
-				
-				e.setMotd(line1 + "\n" + line2);
-				
-			} else {
-				
-				String line1 = Config.getString("Server.MOTD.Maintenance.Line-1");
-				String line2 = Config.getString("Server.MOTD.Maintenance.Line-2");
-				
-				line1 = line1.replace("&", "\\u00A7");
-				line2 = line2.replace("&", "\\u00A7");
-				
-				e.setMotd(line1 + "\n" + line2);
-				
-			}
+			String type = Config.getBoolean("Server.MOTD.Maintenance.Enabled") ? "Maintenance" : "Normal";
+			
+			String line1 = Config.getString("Server.MOTD." + type + ".Line-1");
+			String line2 = Config.getString("Server.MOTD." + type + ".Line-2");
+			
+			e.setMotd((line1 + "\n" + line2).replace("&", "\\u00A7"));
 			
 		}
 		
-		if (Config.getBoolean("Server.Players.Unlimited")) {
-			
-			e.setMaxPlayers(Bukkit.getOnlinePlayers().size() + 1);
-			
-		} else {
-			
-			e.setMaxPlayers(Config.getInteger("Server.Players.Max"));
-			
-		}
+		e.setMaxPlayers(Config.getBoolean("Server.Players.Unlimited") ? (Bukkit.getOnlinePlayers().size() + 1) : Config.getInteger("Server.Players.Max"));
 		
 	}
 	
