@@ -158,7 +158,7 @@ Messages:
     Number: '%prefix% &cThe argument specified was not an integer.'
     
 Spawn:
-  First:
+  FirstJoin:
     Enabled: true
   Join:
     Enabled: true

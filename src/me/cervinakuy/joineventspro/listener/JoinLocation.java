@@ -15,7 +15,7 @@ public class JoinLocation implements Listener {
 	public void onJoin(PlayerJoinEvent e) {
 		
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore()) ? "First" : "Join";
+		String joinType = (!p.hasPlayedBefore()) ? "FirstJoin" : "Join";
 		
 		if (Config.getBoolean("Spawn." + joinType + ".Enabled")) {
 			
@@ -32,7 +32,7 @@ public class JoinLocation implements Listener {
 				
 			} else {
 			
-				p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType));
+				p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join" : "Join"));
 				
 			}
 			

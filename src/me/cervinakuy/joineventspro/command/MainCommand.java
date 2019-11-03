@@ -77,7 +77,7 @@ public class MainCommand implements CommandExecutor {
 							
 						} else if (args[0].equalsIgnoreCase("setfirstjoinlocation") || args[0].equalsIgnoreCase("setjoinlocation")) {
 							
-							String joinType = args[0].equalsIgnoreCase("setfirstjoinlocation") ? "First" : "Join";
+							String joinType = args[0].equalsIgnoreCase("setfirstjoinlocation") ? "FirstJoin" : "Join";
 							
 							plugin.getConfig().set("Spawn." + joinType + ".World", p.getWorld().getName());
 							plugin.getConfig().set("Spawn." + joinType + ".X", p.getLocation().getBlockX());
@@ -87,7 +87,7 @@ public class MainCommand implements CommandExecutor {
 							plugin.getConfig().set("Spawn." + joinType + ".Pitch", p.getLocation().getPitch());
 							plugin.saveConfig();
 							
-							p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
+							p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
 							p.playSound(p.getLocation(), XSound.ENTITY_PLAYER_LEVELUP.parseSound(), 1, 1);
 							
 						} else if (args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation")) {	
