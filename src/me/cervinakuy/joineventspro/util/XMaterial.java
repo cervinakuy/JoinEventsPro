@@ -1103,7 +1103,6 @@ public enum XMaterial {
      *
      * @since 3.0.0
      */
-    @SuppressWarnings("UnstableApiUsage")
     private static final ImmutableMap<XMaterial, XMaterial> DUPLICATED = Maps.immutableEnumMap(ImmutableMap.<XMaterial, XMaterial>builder()
             .put(MELON, MELON_SLICE)
             .put(CARROT, CARROTS)
@@ -1877,7 +1876,6 @@ public enum XMaterial {
      * @return data of this material, or 0 if none.
      * @since 1.0.0
      */
-    @SuppressWarnings("deprecation")
     public byte getData() {
         return data;
     }
