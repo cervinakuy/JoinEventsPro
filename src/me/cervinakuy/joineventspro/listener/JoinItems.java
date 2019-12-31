@@ -38,7 +38,7 @@ public class JoinItems implements Listener {
 					
 					if (p.hasPermission(Config.getString(joinType + ".Items." + items + ".Permission"))) {
 						
-						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).parseMaterial(), Config.getInteger(joinType + ".Items." + items + ".Amount"));
+						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).get().parseMaterial(), Config.getInteger(joinType + ".Items." + items + ".Amount"));
 						ItemMeta itemMeta = item.getItemMeta();
 						
 						itemMeta.setDisplayName(Config.getString(joinType + ".Items." + items + ".Name"));
@@ -79,7 +79,7 @@ public class JoinItems implements Listener {
 						
 						if (!(items.equals("Enabled"))) {
 							
-							if (Toolkit.getMainHandItem(p).getType() == XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).parseMaterial()) {
+							if (Toolkit.getMainHandItem(p).getType() == XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).get().parseMaterial()) {
 								
 								if (Toolkit.getMainHandItem(p).getItemMeta().getDisplayName().equals(Config.getString(joinType + ".Items." + items + ".Name"))) {
 									
