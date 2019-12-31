@@ -22,7 +22,7 @@ public class JoinSound implements Listener {
 			
 			for (Player all : Bukkit.getOnlinePlayers()) {
 				
-				all.playSound(p.getLocation(), XSound.matchXSound(Config.getString(joinType + ".Sound.Sound")).parseSound(), 1, Config.getInteger(joinType + ".Sound.Pitch"));
+				all.playSound(p.getLocation(), XSound.matchXSound(Config.getString(joinType + ".Sound.Sound")).get().parseSound(), 1, Config.getInteger(joinType + ".Sound.Pitch"));
 				
 			}
 			
@@ -39,7 +39,7 @@ public class JoinSound implements Listener {
 			
 			for (Player all : Bukkit.getOnlinePlayers()) {
 				
-				all.playSound(p.getLocation(), XSound.matchXSound(Config.getString("Leave.Sound.Sound")).parseSound(), 1, Config.getInteger("Leave.Sound.Pitch"));
+				all.playSound(p.getLocation(), XSound.matchXSound(Config.getString("Leave.Sound.Sound")).get().parseSound(), 1, Config.getInteger("Leave.Sound.Pitch"));
 				
 			}
 			
