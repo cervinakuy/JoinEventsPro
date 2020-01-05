@@ -51,7 +51,7 @@ FirstJoin:
 
 Join:
   Message:
-    Message: '&7[&a&l+&7] &7&b%player% &7joined the server. This message supports PlaceholderAPI.'
+    Message: '&7[&a&l+&7] &b%player% &7joined the server. This message supports PlaceholderAPI.'
     Enabled: true
   Sound:
     Sound: 'ITEM_PICKUP'
