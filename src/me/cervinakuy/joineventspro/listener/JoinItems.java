@@ -51,20 +51,25 @@ public class JoinItems implements Listener {
 						
 						item.setItemMeta(itemMeta);
 						
-						
 						if (!Config.getConfiguration().contains(itemPath + ".Override") || Config.getBoolean(itemPath + ".Override")) {
-							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), XMaterial.AIR.parseItem());
-							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), item);
+							p.getInventory().setItem(Config.getInteger(itemPath + ".Slot"), XMaterial.AIR.parseItem());
+							p.getInventory().setItem(Config.getInteger(itemPath + ".Slot"), item);
 						} else {
-							if (Config.getBoolean(itemPath + ".Override") == false) {
-								int emptySlot = getEmptySlot(p.getInventory());
-								if (emptySlot != -1) {
-									p.getInventory().setItem(emptySlot, XMaterial.AIR.parseItem());
-									p.getInventory().setItem(emptySlot, item);
-								} else {
-									p.sendMessage(Config.getString("Messages.Error.Slot"));
+							if (p.getInventory().getItem(Config.getInteger(itemPath + ".Slot")) != null) {
+								if (Config.getBoolean(itemPath + ".Override") == false) {
+									int emptySlot = getEmptySlot(p.getInventory());
+									if (emptySlot != -1) {
+										p.getInventory().setItem(emptySlot, XMaterial.AIR.parseItem());
+										p.getInventory().setItem(emptySlot, item);
+									} else {
+										p.sendMessage(Config.getString("Messages.Error.Slot"));
+									}
 								}
+							} else {
+								p.getInventory().setItem(Config.getInteger(itemPath + ".Slot"), XMaterial.AIR.parseItem());
+								p.getInventory().setItem(Config.getInteger(itemPath + ".Slot"), item);
 							}
+
 						}
 						
 					}
