@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,8 +49,18 @@ public class JoinItems implements Listener {
 						
 						item.setItemMeta(itemMeta);
 						
-						p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), XMaterial.AIR.parseItem());
-						p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), item);
+						if (p.getInventory().getItem(Integer.valueOf(joinType + ".Items." + items + ".Slot")) == null) {
+							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), XMaterial.AIR.parseItem());
+							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), item);
+						} else {
+							int emptySlot = getEmptySlot(p.getInventory());
+							if (emptySlot != -1) {
+								p.getInventory().setItem(emptySlot, XMaterial.AIR.parseItem());
+								p.getInventory().setItem(emptySlot, item);
+							} else {
+								p.sendMessage(Config.getString("Messages.Error.Slot"));
+							}
+						}
 						
 					}
 					
@@ -98,6 +109,16 @@ public class JoinItems implements Listener {
 			}
 			
 		}
+		
+	}
+	
+	private int getEmptySlot(Inventory inventory) {
+		for (int i = 0; i < 36; i++) {
+			if (inventory.getItem(i) == null) {
+				return i;
+			}
+		}
+		return -1;
 		
 	}
 
