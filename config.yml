@@ -156,6 +156,7 @@ Messages:
   Error:
     Spawn: '%prefix% &cThere is no %type% Location set.'
     Number: '%prefix% &cThe argument specified was not an integer.'
+    Slot: '%prefix% &cAn item could not be given to you because your inventory was full.'
     
 Spawn:
   FirstJoin:
