@@ -41,6 +41,7 @@ FirstJoin:
       Permission: jep.items.diamond
       Slot: 0
       Amount: 1
+      Override: false
       Lore:
       - '&7Welcome to our Network!'
       - '&7Please take this welcome'
@@ -94,6 +95,10 @@ Join:
       Material: COMPASS
       Lore:
       - '&7This is our server selector.'
+      - '&7it replaces the item in the'
+      - '&7configured slot when'
+      - '&fOverride: true&7 is set'
+      - 'on the item in the config.yml' 
       Commands:
       - 'player: servers'
     Pickaxe:
@@ -102,6 +107,7 @@ Join:
       Amount: 1
       Permission: jep.items.pickaxe
       Material: IRON_PICKAXE
+      Override: false
       Lore:
       - '&7This is a pickaxe.'
     Enabled: false

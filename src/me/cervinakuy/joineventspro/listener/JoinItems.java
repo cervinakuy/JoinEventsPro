@@ -31,34 +31,39 @@ public class JoinItems implements Listener {
 			
 			for (String items : section.getKeys(false)) {
 				
-				if (!Config.getConfiguration().contains(joinType + ".Items." + items + ".Name")) {
+				String itemPath = joinType + ".Items." + items;
+				
+				if (!Config.getConfiguration().contains(itemPath + ".Name")) {
 				
 					break;
 					
 				} else {
 					
-					if (p.hasPermission(Config.getString(joinType + ".Items." + items + ".Permission"))) {
+					if (p.hasPermission(Config.getString(itemPath + ".Permission"))) {
 						
-						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).get().parseMaterial(), Config.getInteger(joinType + ".Items." + items + ".Amount"));
+						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(itemPath + ".Material")).get().parseMaterial(), Config.getInteger(itemPath + ".Amount"));
 						ItemMeta itemMeta = item.getItemMeta();
 						
-						itemMeta.setDisplayName(Config.getString(joinType + ".Items." + items + ".Name"));
+						itemMeta.setDisplayName(Config.getString(itemPath + ".Name"));
 						
-						List<String> lore = Config.translateList(Config.getConfiguration().getStringList(joinType + ".Items." + items + ".Lore"));
+						List<String> lore = Config.translateList(Config.getConfiguration().getStringList(itemPath + ".Lore"));
 						itemMeta.setLore(lore);
 						
 						item.setItemMeta(itemMeta);
 						
-						if (p.getInventory().getItem(Integer.valueOf(joinType + ".Items." + items + ".Slot")) == null) {
+						
+						if (!Config.getConfiguration().contains(itemPath + ".Override") || Config.getBoolean(itemPath + ".Override")) {
 							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), XMaterial.AIR.parseItem());
 							p.getInventory().setItem(Config.getInteger(joinType + ".Items." + items + ".Slot"), item);
 						} else {
-							int emptySlot = getEmptySlot(p.getInventory());
-							if (emptySlot != -1) {
-								p.getInventory().setItem(emptySlot, XMaterial.AIR.parseItem());
-								p.getInventory().setItem(emptySlot, item);
-							} else {
-								p.sendMessage(Config.getString("Messages.Error.Slot"));
+							if (Config.getBoolean(itemPath + ".Override") == false) {
+								int emptySlot = getEmptySlot(p.getInventory());
+								if (emptySlot != -1) {
+									p.getInventory().setItem(emptySlot, XMaterial.AIR.parseItem());
+									p.getInventory().setItem(emptySlot, item);
+								} else {
+									p.sendMessage(Config.getString("Messages.Error.Slot"));
+								}
 							}
 						}
 						
