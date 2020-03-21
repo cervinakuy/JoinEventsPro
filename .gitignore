@@ -5,5 +5,10 @@ bin/
 .settings/
 .classpath
 
+# IntellIj
+.idea/
+target/
+*.iml
+
 # macOS
 .DS_Store
