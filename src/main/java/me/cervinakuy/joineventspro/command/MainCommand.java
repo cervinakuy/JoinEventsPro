@@ -92,7 +92,7 @@ public class MainCommand implements CommandExecutor {
 							
 						} else if (args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation")) {	
 							
-							String joinType = args[0].equalsIgnoreCase("firstjoinlocation") ? "First" : "Join";
+							String joinType = args[0].equalsIgnoreCase("firstjoinlocation") ? "FirstJoin" : "Join";
 							
 							if (Config.getConfiguration().contains("Spawn." + joinType + ".World")) {
 								
@@ -105,11 +105,11 @@ public class MainCommand implements CommandExecutor {
 								p.teleport(spawn);
 								
 								p.playSound(p.getLocation(), XSound.ENTITY_ENDERMAN_TELEPORT.parseSound(), 1, 1);
-								p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
+								p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
 								
 							} else {
 								
-								p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("First") ? "First Join Location" : "Join Location"));
+								p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
 								p.playSound(p.getLocation(), XSound.ENTITY_ENDER_DRAGON_HURT.parseSound(), 1, 1);
 								
 							}
