@@ -132,7 +132,6 @@ Leave:
 Server:
   MOTD:
     Options:
-      Randomize: true
       Maintenance: false
       Enabled: true
     List:

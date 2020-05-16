@@ -38,7 +38,12 @@ public class Game extends JavaPlugin {
 		this.debugMode = new DebugMode();
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
-		
+
+		if (!this.getDataFolder().exists()) {
+			getConfig().options().copyDefaults(true);
+		}
+		saveConfig();
+
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new JoinMessage(this), this);
 		pm.registerEvents(new JoinSound(this), this);
@@ -53,8 +58,6 @@ public class Game extends JavaPlugin {
 		pm.registerEvents(new RefreshListener(), this);
 		
 		getCommand("joineventspro").setExecutor(new MainCommand(this));
-		getConfig().options().copyDefaults(true);
-		saveConfig();
 		
 		new Metrics(this);
 		
