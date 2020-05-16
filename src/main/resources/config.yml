@@ -131,14 +131,23 @@ Leave:
 
 Server:
   MOTD:
-    Normal:
-      Line-1: '&a&lMinecraft Network &7Now with &eJoinEventsPro!'
-      Line-2: '&7This is a customizable second line of the MOTD.'
+    Options:
+      Randomize: true
+      Maintenance: false
       Enabled: true
-    Maintenance:
-      Line-1: '&c&lMinecraft Network &7Now with &eJoinEventsPro!'
-      Line-2: '&7This is a customizable second line of the MOTD.'
-      Enabled: false
+    List:
+      RandomBlue:
+        Line-1: '&b&lMinecraft Network &3Now with JoinEventsPro!'
+        Line-2: '&3This is a customizable second line of the MOTD.'
+      RandomGreen:
+        Line-1: '&2&lMinecraft Network &aNow with JoinEventsPro!'
+        Line-2: '&aThis is a customizable second line of the MOTD.'
+      RandomYellow:
+        Line-1: '&e&lMinecraft Network &6Now with JoinEventsPro!'
+        Line-2: '&6This is a customizable second line of the MOTD.'
+      Maintenance:
+        Line-1: '&c&lMinecraft Network &7Now with &eJoinEventsPro!'
+        Line-2: '&7This is a customizable second line of the MOTD.'
   Messages:
     Full: '&7[&b&lJOINEVENTSPRO&7] &cThe server is currently full, please check back later.'
     Maintenance: '&7[&b&lJOINEVENTSPRO&7] &cThe server is currently undergoing Maintenance, please check back later.'
@@ -157,6 +166,8 @@ Messages:
     Spawn: '%prefix% &7Successfully set the &b%type%&7.'
     MaintenanceOn: '%prefix% &7Server Maintenance is now &eENABLED&7.'
     MaintenanceOff: '%prefix% &7Server Maintenance is now &cDISABLED&7.'
+    DebugOn: '%prefix% &7You are now temporarily testing as a first join player.'
+    DebugOff: '%prefix% &7You are no longer testing as a first join player.'
     Players: '%prefix% &7The player limit is now &b%number% players&7.'
     Unknown: '%prefix% &cUnknown command. Type /jep help for help.'
   Error:

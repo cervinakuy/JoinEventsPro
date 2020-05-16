@@ -2,6 +2,8 @@ package me.cervinakuy.joineventspro.listener;
 
 import java.util.Random;
 
+import me.cervinakuy.joineventspro.Game;
+import me.cervinakuy.joineventspro.util.DebugMode;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.EntityType;
@@ -15,12 +17,18 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import me.cervinakuy.joineventspro.util.Config;
 
 public class JoinFirework implements Listener {
-	
+
+	private DebugMode debug;
+
+	public JoinFirework(Game plugin) {
+		this.debug = plugin.getDebugMode();
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore()) ? "FirstJoin" : "Join";
+		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		
 		if (Config.getBoolean(joinType + ".Other.Firework") && p.hasPermission("jep." + joinType.toLowerCase() + ".firework")) {
 			

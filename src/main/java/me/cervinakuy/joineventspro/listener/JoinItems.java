@@ -2,6 +2,8 @@ package me.cervinakuy.joineventspro.listener;
 
 import java.util.List;
 
+import me.cervinakuy.joineventspro.Game;
+import me.cervinakuy.joineventspro.util.DebugMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,12 +20,18 @@ import me.cervinakuy.joineventspro.util.Toolkit;
 import me.cervinakuy.joineventspro.util.XMaterial;
 
 public class JoinItems implements Listener {
-	
+
+	private DebugMode debug;
+
+	public JoinItems(Game plugin) {
+		this.debug = plugin.getDebugMode();
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore()) ? "FirstJoin" : "Join";
+		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		
 		if (Config.getBoolean(joinType + ".Items.Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".items")) {
 			
@@ -86,7 +94,7 @@ public class JoinItems implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore()) ? "FirstJoin" : "Join";
+		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		
 		if (Config.getBoolean(joinType + ".Items.Enabled")) {
 			

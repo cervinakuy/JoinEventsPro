@@ -14,27 +14,23 @@ public class JoinLogin implements Listener {
 	public void onLogin(PlayerLoginEvent e) {
 		
 		Player p = e.getPlayer();
-		
-		if (Config.getBoolean("Server.Full.Enabled")) {
 			
-			if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
+		if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
 				
-				if (p.hasPermission("jep.server.full")) {
-					
-					e.allow();
-					
-				} else {
-					
-					e.setResult(Result.KICK_FULL);
-					e.setKickMessage(Config.getString("Server.Messages.Full"));
-					
-				}
-				
+			if (p.hasPermission("jep.server.full")) {
+
+				e.allow();
+
+			} else {
+
+				e.setResult(Result.KICK_FULL);
+				e.setKickMessage(Config.getString("Server.Messages.Full"));
+
 			}
 			
 		}
 		
-		if (Config.getBoolean("Server.MOTD.Maintenance.Enabled")) {
+		if (Config.getBoolean("Server.MOTD.Options.Maintenance")) {
 			
 			if (p.hasPermission("jep.server.maintenance")) {
 				

@@ -1,5 +1,6 @@
 package me.cervinakuy.joineventspro;
 
+import me.cervinakuy.joineventspro.util.DebugMode;
 import me.cervinakuy.joineventspro.util.Updater;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +21,7 @@ import me.cervinakuy.joineventspro.listener.JoinNotification;
 import me.cervinakuy.joineventspro.listener.JoinSound;
 import me.cervinakuy.joineventspro.listener.RefreshListener;
 import me.cervinakuy.joineventspro.util.Metrics;
+import sun.security.ssl.Debug;
 
 public class Game extends JavaPlugin {
 
@@ -27,24 +29,26 @@ public class Game extends JavaPlugin {
 	private boolean needsUpdate = false;
 	
 	private static Game instance;
-	
+	private DebugMode debugMode;
+
 	@Override
 	public void onEnable() {
 		
 		instance = this;
-		
+		this.debugMode = new DebugMode();
+
 		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
 		
 		PluginManager pm = Bukkit.getPluginManager();
-		pm.registerEvents(new JoinMessage(), this);
-		pm.registerEvents(new JoinSound(), this);
-		pm.registerEvents(new JoinMOTD(), this);
-		pm.registerEvents(new JoinCommands(), this);
-		pm.registerEvents(new JoinItems(), this);
-		pm.registerEvents(new JoinFirework(), this);
-		pm.registerEvents(new JoinLocation(), this);
+		pm.registerEvents(new JoinMessage(this), this);
+		pm.registerEvents(new JoinSound(this), this);
+		pm.registerEvents(new JoinMOTD(this), this);
+		pm.registerEvents(new JoinCommands(this), this);
+		pm.registerEvents(new JoinItems(this), this);
+		pm.registerEvents(new JoinFirework(this), this);
+		pm.registerEvents(new JoinLocation(this), this);
+		pm.registerEvents(new JoinBook(this), this);
 		pm.registerEvents(new JoinLogin(), this);
-		pm.registerEvents(new JoinBook(), this);
 		pm.registerEvents(new JoinNotification(), this);
 		pm.registerEvents(new RefreshListener(), this);
 		
@@ -96,7 +100,9 @@ public class Game extends JavaPlugin {
 	public boolean needsUpdate() { return needsUpdate; }
 
 	public String getUpdateVersion() { return updateVersion; }
-	
+
+	public DebugMode getDebugMode() { return debugMode; }
+
 	public static Game getInstance() { return instance; }
 	
 }
