@@ -1,7 +1,7 @@
 package me.cervinakuy.joineventspro.command;
 
 import me.cervinakuy.joineventspro.Game;
-import me.cervinakuy.joineventspro.util.DebugMode;
+import me.cervinakuy.joineventspro.util.XSound;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,10 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import me.cervinakuy.joineventspro.util.Config;
-import me.cervinakuy.joineventspro.util.XSound;
 
 public class MainCommand implements CommandExecutor {
 
@@ -63,14 +61,14 @@ public class MainCommand implements CommandExecutor {
 						plugin.reloadConfig();
 
 						p.sendMessage(Config.getString("Messages.Commands.Reload"));
-						XSound.playSoundFromString(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
+						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
 
 					} else if (args[0].equalsIgnoreCase("firstjoindebug")) {
 
 						plugin.getDebugMode().toggleDebugUser(p.getName());
 
 						p.sendMessage(Config.getString(plugin.getDebugMode().isDebugUser(p.getName()) ? "Messages.Commands.DebugOn" : "Messages.Commands.DebugOff"));
-						XSound.playSoundFromString(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
+						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
 
 					} else if (args[0].equalsIgnoreCase("firstjoinmotd") || args[0].equalsIgnoreCase("joinmotd")) {
 
@@ -80,7 +78,7 @@ public class MainCommand implements CommandExecutor {
 							p.sendMessage(Config.translate(lines));
 						}
 
-						XSound.playSoundFromString(p, "ENTITY_EPXERIENCE_ORB_PICKUP, 1, 1");
+						XSound.play(p, "ENTITY_EPXERIENCE_ORB_PICKUP, 1, 1");
 
 					} else if (args[0].equalsIgnoreCase("setfirstjoinlocation") || args[0].equalsIgnoreCase("setjoinlocation")) {
 
@@ -95,7 +93,7 @@ public class MainCommand implements CommandExecutor {
 						plugin.saveConfig();
 
 						p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-						XSound.playSoundFromString(p, "ENTITY_PLAYER_LEVELUP, 1, 1");
+						XSound.play(p, "ENTITY_PLAYER_LEVELUP, 1, 1");
 
 					} else if (args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation")) {
 
@@ -112,12 +110,12 @@ public class MainCommand implements CommandExecutor {
 							p.teleport(spawn);
 
 							p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-							XSound.playSoundFromString(p, "ENTITY_ENDERMAN_TELEPORT, 1, 1");
+							XSound.play(p, "ENTITY_ENDERMAN_TELEPORT, 1, 1");
 
 						} else {
 
 							p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-							XSound.playSoundFromString(p, "ENTITY_ENDER_DRAGON_HIT, 1, 1");
+							XSound.play(p, "ENTITY_ENDER_DRAGON_HIT, 1, 1");
 
 						}
 
@@ -135,19 +133,19 @@ public class MainCommand implements CommandExecutor {
 						}
 
 						p.sendMessage(Config.getString(maintenance ? "Messages.Commands.MaintenanceOff" : "Messages.Commands.MaintenanceOn"));
-						XSound.playSoundFromString(p, "ENTITY_IRON_GOLEM_HURT, 1, -1");
+						XSound.play(p, "ENTITY_IRON_GOLEM_HURT, 1, -1");
 
 					} else {
 
 						p.sendMessage(Config.getString("Messages.Commands.Unknown"));
-						XSound.playSoundFromString(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+						XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
 
 					}
 
 				} else {
 
 					p.sendMessage(Config.getString("Messages.General.Permission"));
-					XSound.playSoundFromString(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+					XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
 
 				}
 
@@ -166,12 +164,12 @@ public class MainCommand implements CommandExecutor {
 						plugin.saveConfig();
 
 						p.sendMessage(Config.getString("Messages.Commands.Players").replace("%number%", args[1]));
-						XSound.playSoundFromString(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
+						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
 
 					} else {
 
 						p.sendMessage(Config.getString("Messages.Error.Number"));
-						XSound.playSoundFromString(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+						XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
 
 					}
 
@@ -180,7 +178,7 @@ public class MainCommand implements CommandExecutor {
 			} else {
 
 				p.sendMessage(Config.getString("Messages.Commands.Unknown"));
-				XSound.playSoundFromString(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+				XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
 
 			}
 

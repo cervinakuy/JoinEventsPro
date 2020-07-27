@@ -2,6 +2,7 @@ package me.cervinakuy.joineventspro.listener;
 
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
+import me.cervinakuy.joineventspro.util.XMaterial;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
 import me.cervinakuy.joineventspro.util.Config;
-import me.cervinakuy.joineventspro.util.XMaterial;
 
 public class JoinBook implements Listener {
 

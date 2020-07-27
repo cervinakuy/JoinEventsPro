@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
+import me.cervinakuy.joineventspro.util.XMaterial;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +18,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.cervinakuy.joineventspro.util.Config;
 import me.cervinakuy.joineventspro.util.Toolkit;
-import me.cervinakuy.joineventspro.util.XMaterial;
 
 public class JoinItems implements Listener {
 
@@ -48,8 +48,8 @@ public class JoinItems implements Listener {
 				} else {
 					
 					if (p.hasPermission(Config.getString(itemPath + ".Permission"))) {
-						
-						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(itemPath + ".Material")).get().parseMaterial(), Config.getInteger(itemPath + ".Amount"));
+
+						ItemStack item = new ItemStack(XMaterial.matchXMaterial(Config.getString(itemPath + ".Material")).get().parseMaterial().get(), Config.getInteger(itemPath + ".Amount"));
 						ItemMeta itemMeta = item.getItemMeta();
 						
 						itemMeta.setDisplayName(Config.getString(itemPath + ".Name"));
@@ -108,7 +108,7 @@ public class JoinItems implements Listener {
 						
 						if (!(items.equals("Enabled"))) {
 							
-							if (Toolkit.getMainHandItem(p).getType() == XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).get().parseMaterial()) {
+							if (Toolkit.getMainHandItem(p).getType() == XMaterial.matchXMaterial(Config.getString(joinType + ".Items." + items + ".Material")).get().parseMaterial().get()) {
 								
 								if (Toolkit.getMainHandItem(p).getItemMeta().getDisplayName().equals(Config.getString(joinType + ".Items." + items + ".Name"))) {
 									

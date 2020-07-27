@@ -2,6 +2,7 @@ package me.cervinakuy.joineventspro.listener;
 
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
+import me.cervinakuy.joineventspro.util.XSound;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +11,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.cervinakuy.joineventspro.util.Config;
-import me.cervinakuy.joineventspro.util.XSound;
 
 public class JoinSound implements Listener {
 
@@ -29,7 +29,7 @@ public class JoinSound implements Listener {
 		if (Config.getBoolean(joinType + ".Sound.Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".sound")) {
 			
 			for (Player all : Bukkit.getOnlinePlayers()) {
-				
+
 				all.playSound(p.getLocation(), XSound.matchXSound(Config.getString(joinType + ".Sound.Sound")).get().parseSound(), 1, Config.getInteger(joinType + ".Sound.Pitch"));
 				
 			}
