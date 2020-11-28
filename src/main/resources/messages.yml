@@ -1,0 +1,18 @@
+Messages:
+  General:
+    Prefix: '&7[&b&lJOINEVENTSPRO&7]'
+    Permission: '%prefix% &cYou do not have permission to execute that command.'
+    Player: '%prefix% &cYou must be a player to perform this action.'
+  Commands:
+    Reload: '%prefix% &7Successfully reloaded the configuration.'
+    Teleported: '%prefix% &7You teleported to the &b%type%&7.'
+    Spawn: '%prefix% &7Successfully set the &b%type%&7.'
+    MaintenanceOn: '%prefix% &7Server Maintenance is now &eENABLED&7.'
+    MaintenanceOff: '%prefix% &7Server Maintenance is now &cDISABLED&7.'
+    DebugOn: '%prefix% &7You are now temporarily testing as a first join player.'
+    DebugOff: '%prefix% &7You are no longer testing as a first join player.'
+    Players: '%prefix% &7The player limit is now &b%number% players&7.'
+    Unknown: '%prefix% &cUnknown command. Type /jep help for help.'
+  Error:
+    Spawn: '%prefix% &cThere is no %type% Location set.'
+    Number: '%prefix% &cThe argument specified was not an integer.'

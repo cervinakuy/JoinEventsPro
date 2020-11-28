@@ -1,0 +1,48 @@
+FirstJoin:
+  Message:
+    Message: '&7[&6&l+&7] &7Welcome &b%player% &7to our server. This message supports PlaceholderAPI.'
+    Enabled: true
+  Sound:
+    Sound: 'AMBIENCE_THUNDER'
+    Pitch: 1
+    Enabled: true
+  Commands: []
+  MOTD:
+    Lines:
+      - '&f&m                                                                  '
+      - ' '
+      - ' &a&lWelcome to our Network!'
+      - ' &7Here at our server, we create quality gameplay'
+      - ' &7for all sorts of players. This message supports PlaceholderAPI.'
+      - ' '
+      - ' &eWebsite &fwww.mynetwork.com'
+      - ' &eStore &fstore.mynetwork.com'
+      - ' '
+      - '&f&m                                                                  '
+    Enabled: true
+  Book:
+    Information:
+      Slot: 4
+      Title: 'Welcome to our Network!'
+      Author: 'Cervinakuy'
+    Pages:
+      - '&a&lWelcome to our Network!%newline%&7This is a custom book made using the plugin &bJoinEventsPro&7.%newline%%newline%&7You can customize these pages in the config.yml.'
+      - '&a&lPage 2%newline%&7This is an example of a second page.'
+    Enabled: true
+  Items:
+    Diamond:
+      Name: '&aFirst Join Diamond'
+      Material: DIAMOND
+      Permission: jep.items.diamond
+      Slot: 0
+      Amount: 1
+      Override: false
+      Lore:
+        - '&7Welcome to our Network!'
+        - '&7Please take this welcome'
+        - '&7diamond.'
+    Enabled: false
+  Other:
+    Firework: true
+  Spawn:
+    Enabled: true

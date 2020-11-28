@@ -1,0 +1,60 @@
+Join:
+  Message:
+    Message: '&7[&a&l+&7] &b%player% &7joined the server. This message supports PlaceholderAPI.'
+    Enabled: true
+  Sound:
+    Sound: 'ITEM_PICKUP'
+    Pitch: 1
+    Enabled: true
+  Commands: []
+  MOTD:
+    Lines:
+      - '&f&m                                                                   '
+      - ' '
+      - ' &6&lWelcome back to our Network!'
+      - ' &7Here at our server, we create quality gameplay'
+      - ' &7for all sorts of players. This message supports PlaceholderAPI.'
+      - ' '
+      - ' &eWebsite &fwww.mynetwork.com'
+      - ' &eStore &fstore.mynetwork.com'
+      - ' '
+      - '&f&m                                                                   '
+    Enabled: true
+  Book:
+    Information:
+      Slot: 4
+      Title: 'Welcome back to our Network!'
+      Author: 'Cervinakuy'
+    Pages:
+      - '&a&lWelcome back to our Network!%newline%&7This is a custom book made using the plugin &bJoinEventsPro&7.%newline%%newline%&7You can customize these pages in the config.yml.'
+      - '&a&lPage 2%newline%&7This is an example of a second page.'
+    Enabled: true
+  Items:
+    Selector:
+      Name: '&aServer Selector &7(Right Click)'
+      Slot: 0
+      Amount: 1
+      Permission: jep.items.selector
+      Material: COMPASS
+      Lore:
+        - '&7This is our server selector.'
+        - '&7it replaces the item in the'
+        - '&7configured slot when'
+        - '&fOverride: true&7 is set'
+        - 'on the item in the config.yml'
+      Commands:
+        - 'player: servers'
+    Pickaxe:
+      Name: '&aDefault Pickaxe'
+      Slot: 1
+      Amount: 1
+      Permission: jep.items.pickaxe
+      Material: IRON_PICKAXE
+      Override: false
+      Lore:
+        - '&7This is a pickaxe.'
+    Enabled: false
+  Other:
+    Firework: true
+  Spawn:
+    Enabled: true

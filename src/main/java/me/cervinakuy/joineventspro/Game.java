@@ -1,9 +1,7 @@
 package me.cervinakuy.joineventspro;
 
-import me.cervinakuy.joineventspro.util.DebugMode;
-import me.cervinakuy.joineventspro.util.Updater;
+import me.cervinakuy.joineventspro.util.*;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,29 +18,29 @@ import me.cervinakuy.joineventspro.listener.JoinMessage;
 import me.cervinakuy.joineventspro.listener.JoinNotification;
 import me.cervinakuy.joineventspro.listener.JoinSound;
 import me.cervinakuy.joineventspro.listener.RefreshListener;
-import me.cervinakuy.joineventspro.util.Metrics;
 import sun.security.ssl.Debug;
 
 public class Game extends JavaPlugin {
 
+	private static Game instance;
+	private Resources resources;
+	private DebugMode debugMode;
+
+	private static String prefix;
 	private String updateVersion = "Error";
 	private boolean needsUpdate = false;
-	
-	private static Game instance;
-	private DebugMode debugMode;
 
 	@Override
 	public void onEnable() {
 		
 		instance = this;
+		this.resources = new Resources(this);
 		this.debugMode = new DebugMode();
 
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
+		resources.load();
+		prefix = resources.getMessages().getString("Messages.General.Prefix");
 
-		if (!this.getDataFolder().exists()) {
-			getConfig().options().copyDefaults(true);
-		}
-		saveConfig();
+		Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
 
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new JoinMessage(this), this);
@@ -53,9 +51,9 @@ public class Game extends JavaPlugin {
 		pm.registerEvents(new JoinFirework(this), this);
 		pm.registerEvents(new JoinLocation(this), this);
 		pm.registerEvents(new JoinBook(this), this);
-		pm.registerEvents(new JoinLogin(), this);
-		pm.registerEvents(new JoinNotification(), this);
-		pm.registerEvents(new RefreshListener(), this);
+		pm.registerEvents(new JoinLogin(this), this);
+		pm.registerEvents(new JoinNotification(this), this);
+		pm.registerEvents(new RefreshListener(this), this);
 		
 		getCommand("joineventspro").setExecutor(new MainCommand(this));
 		
@@ -73,10 +71,10 @@ public class Game extends JavaPlugin {
 		}.runTaskAsynchronously(this);
 		
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[&b&lJOINEVENTSPRO&7] &7Discovered &bPlaceholderAPI&7, now hooking into it."));
+			Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &7Discovered &bPlaceholderAPI&7, now hooking into it."));
 		}
 		
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "[&b&lJOINEVENTSPRO&7] &aSuccessfully loaded the plugin."));
+		Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &aSuccessfully loaded the plugin."));
 		
 	}
 	
@@ -85,15 +83,15 @@ public class Game extends JavaPlugin {
 		Updater.of(this).resourceId(22105).handleResponse((versionResponse, version) -> {
 			switch (versionResponse) {
 				case FOUND_NEW:
-					Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&b&lJOINEVENTSPRO&7] &aNew version found! Please update to v" + version + " on the Spigot page."));
+					Bukkit.getConsoleSender().sendMessage(Toolkit.translate("&7[&b&lJOINEVENTSPRO&7] &aNew version found! Please update to v" + version + " on the Spigot page."));
 					needsUpdate = true;
 					updateVersion = version;
 					break;
 				case LATEST:
-					Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&b&lJOINEVENTSPRO&7] &7No new update found. You are on the latest version."));
+					Bukkit.getConsoleSender().sendMessage(Toolkit.translate("&7[&b&lJOINEVENTSPRO&7] &7No new update found. You are on the latest version."));
 					break;
 				case UNAVAILABLE:
-					Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&b&lJOINEVENTSPRO&7] &cUnable to perform an update check."));
+					Bukkit.getConsoleSender().sendMessage(Toolkit.translate("&7[&b&lJOINEVENTSPRO&7] &cUnable to perform an update check."));
 					break;
 			}
 		}).check();
@@ -106,6 +104,10 @@ public class Game extends JavaPlugin {
 
 	public DebugMode getDebugMode() { return debugMode; }
 
+	public Resources getResources() { return resources; }
+
 	public static Game getInstance() { return instance; }
+
+	public static String getPrefix() { return prefix; }
 	
 }

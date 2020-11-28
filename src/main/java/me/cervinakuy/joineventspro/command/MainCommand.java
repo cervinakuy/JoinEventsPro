@@ -1,7 +1,7 @@
 package me.cervinakuy.joineventspro.command;
 
 import me.cervinakuy.joineventspro.Game;
-import me.cervinakuy.joineventspro.util.XSound;
+import me.cervinakuy.joineventspro.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,186 +10,188 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.cervinakuy.joineventspro.util.Config;
-
 public class MainCommand implements CommandExecutor {
 
 	private Game plugin;
+	private Resources resources;
+	private Resource config;
+	private Resource messages;
 	
 	public MainCommand(Game plugin) {
 		this.plugin = plugin;
+		this.resources = plugin.getResources();
+		this.config = resources.getConfig();
+		this.messages = resources.getMessages();
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-			
+
+		if (args.length == 0) {
+
+			sender.sendMessage(Toolkit.translate("&7[&b&lJOINEVENTSPRO&7]"));
+			sender.sendMessage(Toolkit.translate("&7Version: &b" + plugin.getDescription().getVersion()));
+			sender.sendMessage(Toolkit.translate("&7Developer: &bCervinakuy"));
+			sender.sendMessage(Toolkit.translate("&7Commands: &b/jep help"));
+			sender.sendMessage(Toolkit.translate("&7Download: &bbit.ly/JoinEventsPro"));
+			return true;
+
+		} else if (args.length == 1) {
+
+			if (args[0].equalsIgnoreCase("help")) {
+
+				sender.sendMessage(Toolkit.translate("&7&m                    &r &b&lJOINEVENTSPRO &7&m                    &7&r"));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep &7View information about JoinEventsPro."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep help &7Lists all available commands."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep reload &7Reloads the configuration."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep firstjoindebug &7Temporarily test as a first join player."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep setfirstjoinlocation &7Sets the First Join Location."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep setjoinlocation &7Sets the Join Location."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep firstjoinlocation &7Teleport to the First Join Location."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep joinlocation &7Teleport to the Join Location."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep firstjoinmotd &7Displays the First Join MOTD."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep joinmotd &7Displays the Join MOTD."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep maintenance &7Toggles the built-in Maintenance Mode."));
+				sender.sendMessage(Toolkit.translate("&7- &b/jep setmaxplayers <amount> &7Sets the maximum player limit."));
+				sender.sendMessage(Toolkit.translate("&7&m                                                                 "));
+				return true;
+
+			} else if (args[0].equalsIgnoreCase("reload")
+					&& hasPermission(sender, "jep.commands.admin")) {
+
+				resources.reload();
+
+				sender.sendMessage(messages.getString("Messages.Commands.Reload"));
+				return true;
+
+			} else if ((args[0].equalsIgnoreCase("firstjoinmotd") || args[0].equalsIgnoreCase("joinmotd"))
+					&& hasPermission(sender, "jep.commands.admin")) {
+
+				String joinType = args[0].equalsIgnoreCase("firstjoinmotd") ? "FirstJoin" : "Join";
+				Resource joinConfig = resources.getResourceByName(joinType);
+
+				for (String lines : joinConfig.getStringList(joinType + ".MOTD.Lines")) {
+					sender.sendMessage(Toolkit.translate(lines));
+				}
+
+				return true;
+
+			} else if (args[0].equalsIgnoreCase("maintenance")
+					&& hasPermission(sender, "jep.commands.admin")) {
+
+				boolean maintenance = config.getBoolean("Server.MOTD.Options.Maintenance");
+
+				config.set("Server.MOTD.Options.Maintenance", !maintenance);
+				config.save();
+
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					if (!player.hasPermission("jep.server.maintenance")) {
+						player.kickPlayer(config.getString("Server.Messages.Maintenance"));
+					}
+				}
+
+				sender.sendMessage(messages.getString(maintenance ? "Messages.Commands.MaintenanceOff" : "Messages.Commands.MaintenanceOn"));
+				return true;
+
+			}
+
+		} else if (args.length == 2) {
+
+			if (args[0].equalsIgnoreCase("setmaxplayers")
+					&& hasPermission(sender, "jep.commands.admin")) {
+
+				if (StringUtils.isNumeric(args[1])) {
+
+					if (config.getBoolean("Server.Players.Unlimited")) {
+						config.set("Server.Players.Unlimited", false);
+						config.save();
+					}
+
+					config.set("Server.Players.Max", Integer.parseInt(args[1]));
+					config.save();
+
+					sender.sendMessage(messages.getString("Messages.Commands.Players").replace("%number%", args[1]));
+
+				} else {
+
+					sender.sendMessage(messages.getString("Messages.Error.Number"));
+
+				}
+
+				return true;
+
+			}
+
+		}
+
 		if (sender instanceof Player) {
 
 			Player p = (Player) sender;
 
-			if (args.length == 0) {
+			if (args.length == 1) {
 
-				p.sendMessage(Config.translate("&7[&b&lJOINEVENTSPRO&7]"));
-				p.sendMessage(Config.translate("&7Version: &b" + plugin.getDescription().getVersion()));
-				p.sendMessage(Config.translate("&7Developer: &bCervinakuy"));
-				p.sendMessage(Config.translate("&7Commands: &b/jep help"));
-				p.sendMessage(Config.translate("&7Download: &bbit.ly/JoinEventsPro"));
+				if (args[0].equalsIgnoreCase("firstjoindebug")
+						&& hasPermission(p, "jep.commands.admin")) {
 
-			} else if (args.length == 1) {
+					plugin.getDebugMode().toggleDebugUser(p.getName());
 
-				if (p.hasPermission("jep.commands.admin")) {
+					p.sendMessage(messages.getString(plugin.getDebugMode().isDebugUser(p.getName()) ? "Messages.Commands.DebugOn" : "Messages.Commands.DebugOff"));
+					return true;
 
-					if (args[0].equalsIgnoreCase("help")) {
+				} else if ((args[0].equalsIgnoreCase("setfirstjoinlocation") || args[0].equalsIgnoreCase("setjoinlocation"))
+						&& hasPermission(sender, "jep.commands.admin")) {
 
-						p.sendMessage(Config.translate("&7&m                    &r &b&lJOINEVENTSPRO &7&m                    &7&r"));
-						p.sendMessage(Config.translate("&7- &b/jep &7View information about JoinEventsPro."));
-						p.sendMessage(Config.translate("&7- &b/jep help &7Lists all available commands."));
-						p.sendMessage(Config.translate("&7- &b/jep reload &7Reloads the configuration."));
-						p.sendMessage(Config.translate("&7- &b/jep firstjoindebug &7Temporarily test as a first join player."));
-						p.sendMessage(Config.translate("&7- &b/jep setfirstjoinlocation &7Sets the First Join Location."));
-						p.sendMessage(Config.translate("&7- &b/jep setjoinlocation &7Sets the Join Location."));
-						p.sendMessage(Config.translate("&7- &b/jep firstjoinlocation &7Teleport to the First Join Location."));
-						p.sendMessage(Config.translate("&7- &b/jep joinlocation &7Teleport to the Join Location."));
-						p.sendMessage(Config.translate("&7- &b/jep firstjoinmotd &7Displays the First Join MOTD."));
-						p.sendMessage(Config.translate("&7- &b/jep joinmotd &7Displays the Join MOTD."));
-						p.sendMessage(Config.translate("&7- &b/jep maintenance &7Toggles the built-in Maintenance Mode."));
-						p.sendMessage(Config.translate("&7- &b/jep setmaxplayers <amount> &7Sets the maximum player limit."));
-						p.sendMessage(Config.translate("&7&m                                                                 "));
+					String joinType = args[0].equalsIgnoreCase("setfirstjoinlocation") ? "FirstJoin" : "Join";
 
-					} else if (args[0].equalsIgnoreCase("reload")) {
+					Toolkit.saveLocationToResource(resources.getResourceByName(joinType), joinType + ".Spawn", p.getLocation());
 
-						plugin.reloadConfig();
+					p.sendMessage(messages.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
+					return true;
 
-						p.sendMessage(Config.getString("Messages.Commands.Reload"));
-						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
+				} else if ((args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation"))
+						&& hasPermission(sender, "jep.commands.admin")) {
 
-					} else if (args[0].equalsIgnoreCase("firstjoindebug")) {
+					String joinType = args[0].equalsIgnoreCase("firstjoinlocation") ? "FirstJoin" : "Join";
+					Resource joinConfig = resources.getResourceByName(joinType);
 
-						plugin.getDebugMode().toggleDebugUser(p.getName());
+					if (joinConfig.contains(joinType + ".Spawn.World")) {
 
-						p.sendMessage(Config.getString(plugin.getDebugMode().isDebugUser(p.getName()) ? "Messages.Commands.DebugOn" : "Messages.Commands.DebugOff"));
-						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
+						Location spawn = Toolkit.getLocationFromResource(joinConfig, joinType + ".Spawn.");
+						p.teleport(spawn);
 
-					} else if (args[0].equalsIgnoreCase("firstjoinmotd") || args[0].equalsIgnoreCase("joinmotd")) {
-
-						String joinType = args[0].equalsIgnoreCase("firstjoinmotd") ? "FirstJoin" : "Join";
-
-						for (String lines : Config.getStringList(joinType + ".MOTD.Lines")) {
-							p.sendMessage(Config.translate(lines));
-						}
-
-						XSound.play(p, "ENTITY_EPXERIENCE_ORB_PICKUP, 1, 1");
-
-					} else if (args[0].equalsIgnoreCase("setfirstjoinlocation") || args[0].equalsIgnoreCase("setjoinlocation")) {
-
-						String joinType = args[0].equalsIgnoreCase("setfirstjoinlocation") ? "FirstJoin" : "Join";
-
-						plugin.getConfig().set("Spawn." + joinType + ".World", p.getWorld().getName());
-						plugin.getConfig().set("Spawn." + joinType + ".X", p.getLocation().getBlockX());
-						plugin.getConfig().set("Spawn." + joinType + ".Y", p.getLocation().getBlockY());
-						plugin.getConfig().set("Spawn." + joinType + ".Z", p.getLocation().getBlockZ());
-						plugin.getConfig().set("Spawn." + joinType + ".Yaw", p.getLocation().getYaw());
-						plugin.getConfig().set("Spawn." + joinType + ".Pitch", p.getLocation().getPitch());
-						plugin.saveConfig();
-
-						p.sendMessage(Config.getString("Messages.Commands.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-						XSound.play(p, "ENTITY_PLAYER_LEVELUP, 1, 1");
-
-					} else if (args[0].equalsIgnoreCase("firstjoinlocation") || args[0].equalsIgnoreCase("joinlocation")) {
-
-						String joinType = args[0].equalsIgnoreCase("firstjoinlocation") ? "FirstJoin" : "Join";
-
-						if (Config.getConfiguration().contains("Spawn." + joinType + ".World")) {
-
-							Location spawn = new Location(Bukkit.getWorld(Config.getString("Spawn." + joinType + ".World")),
-									Config.getInteger("Spawn." + joinType + ".X") + 0.5,
-									Config.getInteger("Spawn." + joinType + ".Y"),
-									Config.getInteger("Spawn." + joinType + ".Z") + 0.5,
-									Config.getInteger("Spawn." + joinType + ".Yaw"),
-									Config.getInteger("Spawn." + joinType + ".Pitch"));
-							p.teleport(spawn);
-
-							p.sendMessage(Config.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-							XSound.play(p, "ENTITY_ENDERMAN_TELEPORT, 1, 1");
-
-						} else {
-
-							p.sendMessage(Config.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
-							XSound.play(p, "ENTITY_ENDER_DRAGON_HIT, 1, 1");
-
-						}
-
-					} else if (args[0].equalsIgnoreCase("maintenance")) {
-
-						boolean maintenance = Config.getBoolean("Server.MOTD.Options.Maintenance");
-
-						plugin.getConfig().set("Server.MOTD.Options.Maintenance", !maintenance);
-						plugin.saveConfig();
-
-						for (Player player : Bukkit.getOnlinePlayers()) {
-							if (!player.hasPermission("jep.server.maintenance")) {
-								player.kickPlayer(Config.getString("Server.Messages.Maintenance"));
-							}
-						}
-
-						p.sendMessage(Config.getString(maintenance ? "Messages.Commands.MaintenanceOff" : "Messages.Commands.MaintenanceOn"));
-						XSound.play(p, "ENTITY_IRON_GOLEM_HURT, 1, -1");
+						p.sendMessage(messages.getString("Messages.Commands.Teleported").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
 
 					} else {
 
-						p.sendMessage(Config.getString("Messages.Commands.Unknown"));
-						XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+						p.sendMessage(messages.getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join Location" : "Join Location"));
 
 					}
 
-				} else {
-
-					p.sendMessage(Config.getString("Messages.General.Permission"));
-					XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
+					return true;
 
 				}
-
-			} else if (args.length == 2) {
-
-				if (args[0].equalsIgnoreCase("setmaxplayers")) {
-
-					if (StringUtils.isNumeric(args[1])) {
-
-						if (Config.getBoolean("Server.Players.Unlimited")) {
-							Config.getConfiguration().set("Server.Players.Unlimited", false);
-							plugin.saveConfig();
-						}
-
-						plugin.getConfig().set("Server.Players.Max", Integer.parseInt(args[1]));
-						plugin.saveConfig();
-
-						p.sendMessage(Config.getString("Messages.Commands.Players").replace("%number%", args[1]));
-						XSound.play(p, "ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1");
-
-					} else {
-
-						p.sendMessage(Config.getString("Messages.Error.Number"));
-						XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
-
-					}
-
-				}
-
-			} else {
-
-				p.sendMessage(Config.getString("Messages.Commands.Unknown"));
-				XSound.play(p, "ENTITY_ENDER_DRAGON_HURT, 1, 1");
 
 			}
 
 		} else {
 
-			sender.sendMessage(Config.getString("Messages.General.Player"));
+			sender.sendMessage(messages.getString("Messages.General.Player"));
+			return true;
 
 		}
-		
+
 		return false;
 		
+	}
+
+	private boolean hasPermission(CommandSender sender, String permission) {
+
+		if (sender.hasPermission(permission)) {
+			return true;
+		}
+		sender.sendMessage(messages.getString("Messages.General.Permission"));
+		return false;
+
 	}
 	
 }

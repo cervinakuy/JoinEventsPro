@@ -4,6 +4,8 @@ import java.util.Random;
 
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
+import me.cervinakuy.joineventspro.util.Resource;
+import me.cervinakuy.joineventspro.util.Resources;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.EntityType;
@@ -14,13 +16,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import me.cervinakuy.joineventspro.util.Config;
-
 public class JoinFirework implements Listener {
 
+	private Resources resources;
 	private DebugMode debug;
 
 	public JoinFirework(Game plugin) {
+		this.resources = plugin.getResources();
 		this.debug = plugin.getDebugMode();
 	}
 
@@ -29,8 +31,9 @@ public class JoinFirework implements Listener {
 		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
-		
-		if (Config.getBoolean(joinType + ".Other.Firework") && p.hasPermission("jep." + joinType.toLowerCase() + ".firework")) {
+		Resource joinConfig = resources.getResourceByName(joinType);
+
+		if (joinConfig.getBoolean(joinType + ".Other.Firework") && p.hasPermission("jep." + joinType.toLowerCase() + ".firework")) {
 			
 		    Firework firework = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 		    FireworkMeta fireworkMeta = firework.getFireworkMeta();

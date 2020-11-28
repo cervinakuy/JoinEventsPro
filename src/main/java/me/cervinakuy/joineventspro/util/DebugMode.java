@@ -9,7 +9,6 @@ public class DebugMode {
 
     public DebugMode() {
         this.debugUsers = new ArrayList<String>();
-
     }
 
     public void toggleDebugUser(String username) {

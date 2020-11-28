@@ -1,14 +1,20 @@
 package me.cervinakuy.joineventspro.listener;
 
+import me.cervinakuy.joineventspro.Game;
+import me.cervinakuy.joineventspro.util.Resource;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import me.cervinakuy.joineventspro.util.Config;
-
 public class JoinLogin implements Listener {
+
+	private Resource config;
+
+	public JoinLogin(Game plugin) {
+		this.config = plugin.getResources().getConfig();
+	}
 
 	@EventHandler
 	public void onLogin(PlayerLoginEvent e) {
@@ -24,13 +30,13 @@ public class JoinLogin implements Listener {
 			} else {
 
 				e.setResult(Result.KICK_FULL);
-				e.setKickMessage(Config.getString("Server.Messages.Full"));
+				e.setKickMessage(config.getString("Server.Messages.Full"));
 
 			}
 			
 		}
 		
-		if (Config.getBoolean("Server.MOTD.Options.Maintenance")) {
+		if (config.getBoolean("Server.MOTD.Options.Maintenance")) {
 			
 			if (p.hasPermission("jep.server.maintenance")) {
 				
@@ -39,7 +45,7 @@ public class JoinLogin implements Listener {
 			} else {
 				
 				e.setResult(Result.KICK_OTHER);
-				e.setKickMessage(Config.getString("Server.Messages.Maintenance"));
+				e.setKickMessage(config.getString("Server.Messages.Maintenance"));
 				
 			}
 			
