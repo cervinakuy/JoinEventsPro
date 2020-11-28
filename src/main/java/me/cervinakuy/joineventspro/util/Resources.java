@@ -32,7 +32,8 @@ public class Resources {
 
         regularJoin.addCopyDefaultExemption("Join.MOTD.Lines");
         regularJoin.addCopyDefaultExemption("Join.Book.Information.Pages");
-        regularJoin.addCopyDefaultExemption("Join.Items.Diamond");
+        regularJoin.addCopyDefaultExemption("Join.Items.Selector");
+        regularJoin.addCopyDefaultExemption("Join.Items.Pickaxe");
         regularJoin.copyDefaults();
 
         firstJoin.addCopyDefaultExemption("FirstJoin.MOTD.Lines");

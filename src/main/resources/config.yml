@@ -1,3 +1,6 @@
+# Documentation for using commands in configuration files can be found here:
+# github.com/cervinakuy/KitPvP/wiki/Typical-Formats
+
 Leave:
   Message:
     Message: '&7[&c&l-&7] &b%player% &7left the server. This message supports PlaceholderAPI.'
