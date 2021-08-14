@@ -81,9 +81,9 @@ public class JoinItems implements Listener {
 			
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
 
-				ItemStack mainHand = Toolkit.getMainHandItem(p);
+				ItemStack handItem = Toolkit.getHandItemForInteraction(e);
 
-				if (!mainHand.hasItemMeta()) {
+				if (!handItem.hasItemMeta()) {
 					return;
 				}
 
@@ -95,9 +95,9 @@ public class JoinItems implements Listener {
 
 						String pathPrefix = joinType + ".Items." + itemIdentifier;
 
-						if (mainHand.getType() == XMaterial.matchXMaterial(joinConfig.getString(pathPrefix + ".Material")).get().parseMaterial()) {
+						if (handItem.getType() == XMaterial.matchXMaterial(joinConfig.getString(pathPrefix + ".Material")).get().parseMaterial()) {
 
-							if (mainHand.getItemMeta().getDisplayName().equals(joinConfig.getString(pathPrefix + ".Name"))) {
+							if (handItem.getItemMeta().getDisplayName().equals(joinConfig.getString(pathPrefix + ".Name"))) {
 
 								List<String> commands = joinConfig.getStringList(pathPrefix + ".Commands");
 								Toolkit.runCommands(p, commands);

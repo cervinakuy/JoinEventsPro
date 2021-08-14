@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -94,21 +96,16 @@ public class Toolkit {
  	}
 	
  	@SuppressWarnings("deprecation")
-	public static ItemStack getMainHandItem(Player p) {
- 		
- 		if (versionToNumber() == 18) {
- 			
- 			return p.getItemInHand();
- 			
- 		} else if (versionToNumber() > 18) {
- 			
- 			return p.getInventory().getItemInMainHand();
- 			
- 		}
- 		
- 		return p.getItemInHand();
- 		
- 	}
+ 	public static ItemStack getHandItemForInteraction(PlayerInteractEvent e) {
+		Player p = e.getPlayer();
+
+		if (versionToNumber() == 18) {
+			return p.getItemInHand();
+		}
+
+		EquipmentSlot slot = e.getHand() != null ? e.getHand() : EquipmentSlot.HAND;
+		return p.getInventory().getItem(slot);
+	}
 
 	public static String translate(String s) {
 
