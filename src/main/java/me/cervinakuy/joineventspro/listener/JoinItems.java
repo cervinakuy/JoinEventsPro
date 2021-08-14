@@ -93,7 +93,7 @@ public class JoinItems implements Listener {
 
 					if (!itemIdentifier.equals("Enabled")) {
 
-						String pathPrefix = joinType + ".Items" + itemIdentifier;
+						String pathPrefix = joinType + ".Items." + itemIdentifier;
 
 						if (mainHand.getType() == XMaterial.matchXMaterial(joinConfig.getString(pathPrefix + ".Material")).get().parseMaterial()) {
 
