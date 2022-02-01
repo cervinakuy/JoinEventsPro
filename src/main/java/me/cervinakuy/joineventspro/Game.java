@@ -18,7 +18,6 @@ import me.cervinakuy.joineventspro.listener.JoinMessage;
 import me.cervinakuy.joineventspro.listener.JoinNotification;
 import me.cervinakuy.joineventspro.listener.JoinSound;
 import me.cervinakuy.joineventspro.listener.RefreshListener;
-import sun.security.ssl.Debug;
 
 public class Game extends JavaPlugin {
 
