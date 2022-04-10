@@ -15,8 +15,8 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class JoinBook implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinBook(Game plugin) {
 		this.resources = plugin.getResources();
@@ -35,7 +35,7 @@ public class JoinBook implements Listener {
 			
 			ItemStack book = XMaterial.WRITTEN_BOOK.parseItem();
 			BookMeta bookMeta = (BookMeta) book.getItemMeta();
-			int bookSlot = joinConfig.getInt(joinType + ".Information.Slot");
+			int bookSlot = joinConfig.getInt(pathPrefix + ".Information.Slot");
 
 			bookMeta.setTitle(joinConfig.getString(pathPrefix + ".Information.Title"));
 			bookMeta.setAuthor(joinConfig.getString(pathPrefix + ".Information.Author"));
