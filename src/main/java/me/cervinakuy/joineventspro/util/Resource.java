@@ -72,9 +72,9 @@ public class Resource extends YamlConfiguration {
 
             for (String valuePath : defaultConfig.getValues(true).keySet()) {
                 if (!contains(valuePath)) {
-                    System.out.println("Does not have " + valuePath);
+//                    System.out.println("Does not have " + valuePath);
                     if (!Toolkit.containsAnyThatStartWith(copyDefaultExemptions, valuePath)) {
-                        System.out.println("No exemptions found");
+//                        System.out.println("No exemptions found");
                         this.set(valuePath, defaultConfig.get(valuePath));
                     }
                 }

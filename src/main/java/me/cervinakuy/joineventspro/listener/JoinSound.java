@@ -33,12 +33,9 @@ public class JoinSound implements Listener {
 		String pathPrefix = joinType + ".Sound";
 		
 		if (joinConfig.getBoolean(pathPrefix + ".Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".sound")) {
-			
 			for (Player all : Bukkit.getOnlinePlayers()) {
-
 				XSound.play(all, joinConfig.getString(pathPrefix + ".Sound") + ", 1, " + joinConfig.getInt(pathPrefix + ".Pitch"));
 			}
-			
 		}
 		
 	}
@@ -49,13 +46,9 @@ public class JoinSound implements Listener {
 		Player p = e.getPlayer();
 
 		if (config.getBoolean("Leave.Sound.Enabled") && p.hasPermission("jep.leave.sound")) {
-			
 			for (Player all : Bukkit.getOnlinePlayers()) {
-
 				XSound.play(all, config.getString("Leave.Sound.Sound") + ", 1, " + config.getInt("Leave.Sound.Pitch"));
-
 			}
-			
 		}
 		
 	}

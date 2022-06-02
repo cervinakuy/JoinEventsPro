@@ -6,7 +6,7 @@
 
     <groupId>me.cervinakuy</groupId>
     <artifactId>JoinEventsPro</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -70,7 +70,7 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <shadedArtifactAttached>false</shadedArtifactAttached>
-                            <outputFile>/Users/nico/Developer/SpigotL/plugins/${project.artifactId}.jar</outputFile>
+                            <outputFile>/Users/nico/Developer/Spigot/Latest/plugins/${project.artifactId}.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.2-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>7.6.0.0.1</version>
+            <version>8.6.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
