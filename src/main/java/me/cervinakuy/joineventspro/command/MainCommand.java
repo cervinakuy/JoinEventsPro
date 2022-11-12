@@ -2,7 +2,6 @@ package me.cervinakuy.joineventspro.command;
 
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.*;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -159,7 +158,7 @@ public class MainCommand implements CommandExecutor {
 	}
 
 	private void executeSetMaxPlayersCommand(CommandSender sender, String[] args) {
-		if (!StringUtils.isNumeric(args[1])) {
+		if (!Toolkit.isNumeric(args[1])) {
 			sender.sendMessage(messages.fetchString("Messages.Error.Number"));
 			return;
 		}
