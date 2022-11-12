@@ -33,7 +33,7 @@ public class JoinMessage implements Listener {
 
 		if (joinConfig.getBoolean(pathPrefix + ".Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".message")) {
 
-			e.setJoinMessage(Toolkit.addPlaceholdersIfPossible(p, joinConfig.getString(pathPrefix + ".Message").replace("%player%", p.getName())));
+			e.setJoinMessage(Toolkit.addPlaceholdersIfPossible(p, joinConfig.fetchString(pathPrefix + ".Message").replace("%player%", p.getName())));
 			
 		} else {
 			
@@ -50,7 +50,7 @@ public class JoinMessage implements Listener {
 		
 		if (config.getBoolean("Leave.Message.Enabled") && p.hasPermission("jep.leave.message")) {
 
-			e.setQuitMessage(Toolkit.addPlaceholdersIfPossible(p, config.getString("Leave.Message.Message").replace("%player%", p.getName())));
+			e.setQuitMessage(Toolkit.addPlaceholdersIfPossible(p, config.fetchString("Leave.Message.Message").replace("%player%", p.getName())));
 			
 		} else {
 			

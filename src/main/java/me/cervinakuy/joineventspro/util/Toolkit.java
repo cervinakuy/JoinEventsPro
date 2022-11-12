@@ -129,7 +129,7 @@ public class Toolkit {
 
 	public static Location getLocationFromResource(Resource resource, String path) {
 
-		return new Location(Bukkit.getWorld(resource.getString(path + ".World")),
+		return new Location(Bukkit.getWorld(resource.fetchString(path + ".World")),
 				(float) resource.getInt(path + ".X") + 0.5,
 				(float) resource.getInt(path + ".Y"),
 				(float) resource.getInt(path + ".Z") + 0.5,
@@ -152,6 +152,10 @@ public class Toolkit {
 
 		return false;
 
+	}
+	
+	public static void printToConsole(String string) {
+		Bukkit.getConsoleSender().sendMessage(string);
 	}
 
 }

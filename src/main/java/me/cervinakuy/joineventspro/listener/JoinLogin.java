@@ -30,7 +30,7 @@ public class JoinLogin implements Listener {
 			} else {
 
 				e.setResult(Result.KICK_FULL);
-				e.setKickMessage(supportMultipleLines(config.getString("Server.Messages.Full")));
+				e.setKickMessage(supportMultipleLines(config.fetchString("Server.Messages.Full")));
 
 			}
 			
@@ -45,7 +45,7 @@ public class JoinLogin implements Listener {
 			} else {
 				
 				e.setResult(Result.KICK_OTHER);
-				e.setKickMessage(supportMultipleLines(config.getString("Server.Messages.Maintenance")));
+				e.setKickMessage(supportMultipleLines(config.fetchString("Server.Messages.Maintenance")));
 				
 			}
 			

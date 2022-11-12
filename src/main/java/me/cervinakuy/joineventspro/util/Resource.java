@@ -100,13 +100,15 @@ public class Resource extends YamlConfiguration {
 
     }
 
-    @Override
-    public String getString(String path) {
-        String string = super.getString(path);
+    public String fetchString(String path) {
+        String string = super.fetchString(path);
 
         if (string != null) {
             string = ChatColor.translateAlternateColorCodes('&',
                     string.replace("%prefix%", Game.getPrefix() == null ? "" : Game.getPrefix()));
+        } else {
+            string = "String not found";
+            Toolkit.printToConsole(String.format("&7[&b&lKIT-PVP&7] &cString with path %s was not found.", path));
         }
 
         return string;

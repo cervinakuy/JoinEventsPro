@@ -37,8 +37,8 @@ public class JoinBook implements Listener {
 			BookMeta bookMeta = (BookMeta) book.getItemMeta();
 			int bookSlot = joinConfig.getInt(pathPrefix + ".Information.Slot");
 
-			bookMeta.setTitle(joinConfig.getString(pathPrefix + ".Information.Title"));
-			bookMeta.setAuthor(joinConfig.getString(pathPrefix + ".Information.Author"));
+			bookMeta.setTitle(joinConfig.fetchString(pathPrefix + ".Information.Title"));
+			bookMeta.setAuthor(joinConfig.fetchString(pathPrefix + ".Information.Author"));
 			bookMeta.setPages(Toolkit.replaceInList(joinConfig.getStringList(pathPrefix + ".Pages"), "%newline%", "\n"));
 			
 			book.setItemMeta(bookMeta);

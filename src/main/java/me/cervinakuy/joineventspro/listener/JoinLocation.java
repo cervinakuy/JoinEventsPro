@@ -42,7 +42,7 @@ public class JoinLocation implements Listener {
 				
 			} else {
 			
-				p.sendMessage(resources.getMessages().getString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join" : "Join"));
+				p.sendMessage(resources.getMessages().fetchString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join" : "Join"));
 				
 			}
 			

@@ -37,7 +37,7 @@ public class Game extends JavaPlugin {
 		this.debugMode = new DebugMode();
 
 		resources.load();
-		prefix = resources.getMessages().getString("Messages.General.Prefix");
+		prefix = resources.getMessages().fetchString("Messages.General.Prefix");
 
 		Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
 

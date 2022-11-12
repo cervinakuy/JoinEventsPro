@@ -46,14 +46,14 @@ public class JoinItems implements Listener {
 					
 				} else {
 					
-					if (p.hasPermission(joinConfig.getString(itemPath + ".Permission"))) {
+					if (p.hasPermission(joinConfig.fetchString(itemPath + ".Permission"))) {
 
-						String material = joinConfig.getString(itemPath + ".Material");
+						String material = joinConfig.fetchString(itemPath + ".Material");
 						int amount = joinConfig.getInt(itemPath + ".Amount");
 						ItemStack item = new ItemStack(XMaterial.matchXMaterial(material).get().parseMaterial(), amount);
 
 						ItemMeta itemMeta = item.getItemMeta();
-						itemMeta.setDisplayName(joinConfig.getString(itemPath + ".Name"));
+						itemMeta.setDisplayName(joinConfig.fetchString(itemPath + ".Name"));
 						itemMeta.setLore(joinConfig.getStringList(itemPath + ".Lore"));
 						item.setItemMeta(itemMeta);
 
@@ -95,10 +95,10 @@ public class JoinItems implements Listener {
 
 						String pathPrefix = joinType + ".Items." + itemIdentifier;
 
-						if (mainHand.getType() == XMaterial.matchXMaterial(joinConfig.getString(pathPrefix + ".Material")).get().parseMaterial()) {
+						if (mainHand.getType() == XMaterial.matchXMaterial(joinConfig.fetchString(pathPrefix + ".Material")).get().parseMaterial()) {
 
 							if (mainHand.getItemMeta().hasDisplayName() &&
-									mainHand.getItemMeta().getDisplayName().equals(joinConfig.getString(pathPrefix + ".Name"))) {
+									mainHand.getItemMeta().getDisplayName().equals(joinConfig.fetchString(pathPrefix + ".Name"))) {
 
 								List<String> commands = joinConfig.getStringList(pathPrefix + ".Commands");
 								Toolkit.runCommands(p, commands);

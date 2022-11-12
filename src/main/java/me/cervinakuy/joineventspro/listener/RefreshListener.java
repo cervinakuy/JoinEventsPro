@@ -49,8 +49,8 @@ public class RefreshListener implements Listener {
 
 	private String getMOTDFromConfig(String path) {
 
-		String line1 = config.getString(path + ".Line-1");
-		String line2 = config.getString(path + ".Line-2");
+		String line1 = config.fetchString(path + ".Line-1");
+		String line2 = config.fetchString(path + ".Line-2");
 
 		return (line1 + "\n" + line2).replace("&", "\\u00A7");
 
