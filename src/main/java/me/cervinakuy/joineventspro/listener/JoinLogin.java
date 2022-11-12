@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 public class JoinLogin implements Listener {
 
-	private Resource config;
+	private final Resource config;
 
 	public JoinLogin(Game plugin) {
 		this.config = plugin.getResources().getConfig();
@@ -18,45 +18,29 @@ public class JoinLogin implements Listener {
 
 	@EventHandler
 	public void onLogin(PlayerLoginEvent e) {
-		
 		Player p = e.getPlayer();
 			
 		if (e.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
-				
 			if (p.hasPermission("jep.server.full")) {
-
 				e.allow();
-
 			} else {
-
 				e.setResult(Result.KICK_FULL);
-				e.setKickMessage(supportMultipleLines(config.getString("Server.Messages.Full")));
-
+				e.setKickMessage(supportMultipleLines(config.fetchString("Server.Messages.Full")));
 			}
-			
 		}
 		
 		if (config.getBoolean("Server.MOTD.Options.Maintenance")) {
-			
 			if (p.hasPermission("jep.server.maintenance")) {
-				
 				e.allow();
-				
 			} else {
-				
 				e.setResult(Result.KICK_OTHER);
-				e.setKickMessage(supportMultipleLines(config.getString("Server.Messages.Maintenance")));
-				
+				e.setKickMessage(supportMultipleLines(config.fetchString("Server.Messages.Maintenance")));
 			}
-			
 		}
-		
 	}
 
 	public String supportMultipleLines(String string) {
-
 		return string.replace("%newline%", "\n");
-
 	}
 	
 }

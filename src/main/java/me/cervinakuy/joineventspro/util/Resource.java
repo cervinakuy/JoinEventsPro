@@ -13,12 +13,12 @@ import org.bukkit.plugin.Plugin;
 
 public class Resource extends YamlConfiguration {
 
-    private String name;
+    private final String name;
     private final File file;
-    private List<String> copyDefaultExemptions;
+    private final List<String> copyDefaultExemptions;
 
-    private Plugin plugin;
-    private String path;
+    private final Plugin plugin;
+    private final String path;
 
     public Resource(Plugin plugin, String path) {
         this.plugin = plugin;
@@ -30,7 +30,6 @@ public class Resource extends YamlConfiguration {
     }
 
     public void load() {
-
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -56,7 +55,6 @@ public class Resource extends YamlConfiguration {
     }
 
     public void copyDefaults() {
-
         Reader defaultConfigSearchResult = null;
 
         if (plugin.getResource(path) != null) {
@@ -72,9 +70,7 @@ public class Resource extends YamlConfiguration {
 
             for (String valuePath : defaultConfig.getValues(true).keySet()) {
                 if (!contains(valuePath)) {
-//                    System.out.println("Does not have " + valuePath);
                     if (!Toolkit.containsAnyThatStartWith(copyDefaultExemptions, valuePath)) {
-//                        System.out.println("No exemptions found");
                         this.set(valuePath, defaultConfig.get(valuePath));
                     }
                 }
@@ -85,28 +81,26 @@ public class Resource extends YamlConfiguration {
     }
 
     public void addCopyDefaultExemption(String path) {
-
         copyDefaultExemptions.add(path);
-
     }
 
     public void save() {
-
         try {
             super.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    @Override
-    public String getString(String path) {
+    public String fetchString(String path) {
         String string = super.getString(path);
 
         if (string != null) {
             string = ChatColor.translateAlternateColorCodes('&',
                     string.replace("%prefix%", Game.getPrefix() == null ? "" : Game.getPrefix()));
+        } else {
+            string = "String not found";
+            Toolkit.printToConsole(String.format("&7[&b&lJOINEVENTSPRO7] &cString with path %s was not found.", path));
         }
 
         return string;

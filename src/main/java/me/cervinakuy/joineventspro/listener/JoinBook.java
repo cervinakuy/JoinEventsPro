@@ -15,8 +15,8 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class JoinBook implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinBook(Game plugin) {
 		this.resources = plugin.getResources();
@@ -25,25 +25,25 @@ public class JoinBook implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Book";
 
-		if (joinConfig.getBoolean(pathPrefix + ".Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".book")) {
-			
+		if (joinConfig.getBoolean(pathPrefix + ".Enabled") &&
+				p.hasPermission("jep." + joinType.toLowerCase() + ".book")) {
+
 			ItemStack book = XMaterial.WRITTEN_BOOK.parseItem();
 			BookMeta bookMeta = (BookMeta) book.getItemMeta();
-			int bookSlot = joinConfig.getInt(joinType + ".Information.Slot");
+			int bookSlot = joinConfig.getInt(pathPrefix + ".Information.Slot");
 
-			bookMeta.setTitle(joinConfig.getString(pathPrefix + ".Information.Title"));
-			bookMeta.setAuthor(joinConfig.getString(pathPrefix + ".Information.Author"));
-			bookMeta.setPages(Toolkit.replaceInList(joinConfig.getStringList(pathPrefix + ".Pages"), "%newline%", "\n"));
+			bookMeta.setTitle(joinConfig.fetchString(pathPrefix + ".Information.Title"));
+			bookMeta.setAuthor(joinConfig.fetchString(pathPrefix + ".Information.Author"));
+			bookMeta.setPages(Toolkit.replaceInList(joinConfig.getStringList(pathPrefix + ".Pages"),
+					"%newline%", "\n"));
 			
 			book.setItemMeta(bookMeta);
 			p.getInventory().setItem(bookSlot, book);
-			
 		}
 		
 	}

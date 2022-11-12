@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinMessage implements Listener {
 
-	private Resources resources;
-	private Resource config;
-	private DebugMode debug;
+	private final Resources resources;
+	private final Resource config;
+	private final DebugMode debug;
 
 	public JoinMessage(Game plugin) {
 		this.resources = plugin.getResources();
@@ -25,39 +25,31 @@ public class JoinMessage implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Message";
 
-		if (joinConfig.getBoolean(pathPrefix + ".Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".message")) {
-
-			e.setJoinMessage(Toolkit.addPlaceholdersIfPossible(p, joinConfig.getString(pathPrefix + ".Message").replace("%player%", p.getName())));
-			
+		if (joinConfig.getBoolean(pathPrefix + ".Enabled") &&
+				p.hasPermission("jep." + joinType.toLowerCase() + ".message")) {
+			String joinMessageWithPlaceholders = Toolkit.addPlaceholdersIfPossible(p,
+					joinConfig.fetchString(pathPrefix + ".Message").replace("%player%", p.getName()));
+			e.setJoinMessage(joinMessageWithPlaceholders);
 		} else {
-			
 			e.setJoinMessage("");
-			
 		}
-		
 	}
 	
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		
 		Player p = e.getPlayer();
-		
 		if (config.getBoolean("Leave.Message.Enabled") && p.hasPermission("jep.leave.message")) {
-
-			e.setQuitMessage(Toolkit.addPlaceholdersIfPossible(p, config.getString("Leave.Message.Message").replace("%player%", p.getName())));
-			
+			String leaveMessageWithPlaceholders = Toolkit.addPlaceholdersIfPossible(p,
+					config.fetchString("Leave.Message.Message").replace("%player%", p.getName()));
+			e.setQuitMessage(leaveMessageWithPlaceholders);
 		} else {
-			
 			e.setQuitMessage("");
-			
 		}
-		
 	}
 	
 }

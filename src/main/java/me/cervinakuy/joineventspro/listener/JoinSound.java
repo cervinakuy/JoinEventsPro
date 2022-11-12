@@ -14,9 +14,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinSound implements Listener {
 
-	private Resources resources;
-	private Resource config;
-	private DebugMode debug;
+	private final Resources resources;
+	private final Resource config;
+	private final DebugMode debug;
 
 	public JoinSound(Game plugin) {
 		this.resources = plugin.getResources();
@@ -26,31 +26,32 @@ public class JoinSound implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Sound";
 		
-		if (joinConfig.getBoolean(pathPrefix + ".Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".sound")) {
+		if (joinConfig.getBoolean(pathPrefix + ".Enabled") &&
+				p.hasPermission("jep." + joinType.toLowerCase() + ".sound")) {
 			for (Player all : Bukkit.getOnlinePlayers()) {
-				XSound.play(all, joinConfig.getString(pathPrefix + ".Sound") + ", 1, " + joinConfig.getInt(pathPrefix + ".Pitch"));
+				XSound.play(all, joinConfig.fetchString(pathPrefix + ".Sound") +
+						", 1, " +
+						joinConfig.getInt(pathPrefix + ".Pitch"));
 			}
 		}
-		
 	}
 	
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		
 		Player p = e.getPlayer();
 
 		if (config.getBoolean("Leave.Sound.Enabled") && p.hasPermission("jep.leave.sound")) {
 			for (Player all : Bukkit.getOnlinePlayers()) {
-				XSound.play(all, config.getString("Leave.Sound.Sound") + ", 1, " + config.getInt("Leave.Sound.Pitch"));
+				XSound.play(all, config.fetchString("Leave.Sound.Sound") +
+						", 1, " +
+						config.getInt("Leave.Sound.Pitch"));
 			}
 		}
-		
 	}
 
 }
