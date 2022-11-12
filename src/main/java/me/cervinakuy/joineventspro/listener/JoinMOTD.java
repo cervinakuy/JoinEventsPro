@@ -12,8 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinMOTD implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinMOTD(Game plugin) {
 		this.resources = plugin.getResources();
@@ -22,22 +22,16 @@ public class JoinMOTD implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
-		
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 		
-		if (joinConfig.getBoolean(joinType + ".MOTD.Enabled") && p.hasPermission("jep." + joinType.toLowerCase() + ".motd")) {
-
+		if (joinConfig.getBoolean(joinType + ".MOTD.Enabled") &&
+				p.hasPermission("jep." + joinType.toLowerCase() + ".motd")) {
 			for (String lines : joinConfig.getStringList(joinType + ".MOTD.Lines")) {
-
 				p.sendMessage(Toolkit.addPlaceholdersIfPossible(p, lines.replace("%player%", p.getName())));
-
 			}
-
 		}
-		
 	}
 	
 }

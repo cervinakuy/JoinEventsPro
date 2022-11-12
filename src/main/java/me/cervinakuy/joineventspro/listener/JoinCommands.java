@@ -16,8 +16,8 @@ import java.util.List;
 
 public class JoinCommands implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinCommands(Game plugin) {
 		this.resources = plugin.getResources();
@@ -26,32 +26,22 @@ public class JoinCommands implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 
 		if (p.hasPermission("jep." + joinType.toLowerCase() + ".commands")) {
-
-			List<String> commands = joinConfig.getStringList(joinType + ".Commands");
-			Toolkit.runCommands(p, commands);
-
+			Toolkit.runCommands(p, joinConfig.getStringList(joinType + ".Commands"));
 		}
-		
 	}
 	
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
-		
 		Player p = e.getPlayer();
 		
 		if (p.hasPermission("jep.leave.commands")) {
-
-			List<String> commands = resources.getConfig().getStringList("Leave.Commands");
-			Toolkit.runCommands(p, commands);
-			
+			Toolkit.runCommands(p, resources.getConfig().getStringList("Leave.Commands"));
 		}
-		
 	}
 	
 }

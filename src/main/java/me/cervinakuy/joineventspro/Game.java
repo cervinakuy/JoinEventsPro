@@ -39,7 +39,8 @@ public class Game extends JavaPlugin {
 		resources.load();
 		prefix = resources.getMessages().fetchString("Messages.General.Prefix");
 
-		Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" + this.getDescription().getVersion() + "&7..."));
+		Toolkit.printToConsole("[&b&lJOINEVENTSPRO&7] &7Loading &bJoinEventsPro &7version &b" +
+				this.getDescription().getVersion() + "&7...");
 
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new JoinMessage(this), this);
@@ -59,26 +60,21 @@ public class Game extends JavaPlugin {
 		new Metrics(this);
 		
 		new BukkitRunnable() {
-			
 			@Override
 			public void run() {
-				
 				checkUpdates();
-				
 			}
-			
 		}.runTaskAsynchronously(this);
 		
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-			Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &7Discovered &bPlaceholderAPI&7, now hooking into it."));
+			Toolkit.printToConsole("[&b&lJOINEVENTSPRO&7] &7Discovered &bPlaceholderAPI&7, now hooking into it.");
 		}
-		
-		Bukkit.getConsoleSender().sendMessage(Toolkit.translate("[&b&lJOINEVENTSPRO&7] &aSuccessfully loaded the plugin."));
+
+		Toolkit.printToConsole("[&b&lJOINEVENTSPRO&7] &aSuccessfully loaded the plugin.");
 		
 	}
 	
 	private void checkUpdates() {
-
 		Updater.of(this).resourceId(22105).handleResponse((versionResponse, version) -> {
 			switch (versionResponse) {
 				case FOUND_NEW:
@@ -94,7 +90,6 @@ public class Game extends JavaPlugin {
 					break;
 			}
 		}).check();
-
 	}
 	
 	public boolean needsUpdate() { return needsUpdate; }

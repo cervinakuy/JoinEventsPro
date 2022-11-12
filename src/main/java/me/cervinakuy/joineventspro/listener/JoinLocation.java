@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinLocation implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinLocation(Game plugin) {
 		this.resources = plugin.getResources();
@@ -23,31 +23,21 @@ public class JoinLocation implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Spawn";
 
 		if (joinConfig.getBoolean(pathPrefix + ".Enabled")) {
-			
 			if (joinConfig.contains(pathPrefix + ".World")) {
-
 				if (p.hasPermission("jep." + joinType.toLowerCase() + ".location")) {
-
-					Location spawn = Toolkit.getLocationFromResource(joinConfig, pathPrefix);
-					p.teleport(spawn);
-
+					p.teleport(Toolkit.getLocationFromResource(joinConfig, pathPrefix));
 				}
-				
 			} else {
-			
-				p.sendMessage(resources.getMessages().fetchString("Messages.Error.Spawn").replace("%type%", joinType.equals("FirstJoin") ? "First Join" : "Join"));
-				
+				p.sendMessage(resources.getMessages().fetchString("Messages.Error.Spawn")
+						.replace("%type%", joinType.equals("FirstJoin") ? "First Join" : "Join"));
 			}
-			
 		}
-		
 	}
 	
 }

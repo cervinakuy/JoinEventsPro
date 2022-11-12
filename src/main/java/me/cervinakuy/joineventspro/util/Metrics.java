@@ -112,7 +112,7 @@ public class Metrics {
 
         // Load the data
         enabled = config.getBoolean("enabled", true);
-        serverUUID = config.fetchString("serverUuid");
+        serverUUID = config.getString("serverUuid");
         logFailedRequests = config.getBoolean("logFailedRequests", false);
         logSentData = config.getBoolean("logSentData", false);
         logResponseStatusText = config.getBoolean("logResponseStatusText", false);

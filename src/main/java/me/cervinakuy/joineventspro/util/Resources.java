@@ -4,22 +4,19 @@ import me.cervinakuy.joineventspro.Game;
 
 public class Resources {
 
-    private Resource config;
-    private Resource regularJoin;
-    private Resource firstJoin;
-    private Resource messages;
+    private final Resource config;
+    private final Resource regularJoin;
+    private final Resource firstJoin;
+    private final Resource messages;
 
     public Resources(Game plugin) {
-
         this.config = new Resource(plugin, "config.yml");
         this.regularJoin = new Resource(plugin, "regularjoin.yml");
         this.firstJoin = new Resource(plugin, "firstjoin.yml");
         this.messages = new Resource(plugin, "messages.yml");
-
     }
 
     public void load() {
-
         config.load();
         regularJoin.load();
         firstJoin.load();
@@ -42,30 +39,22 @@ public class Resources {
         firstJoin.copyDefaults();
 
         messages.copyDefaults();
-
     }
 
     public void reload() {
-
         load();
-
     }
 
     public Resource getResourceByName(String resourceName) {
-
         if (resourceName.equalsIgnoreCase("join")) {
-
             return regularJoin;
-
         } else if (resourceName.equalsIgnoreCase("firstjoin")) {
-
             return firstJoin;
-
         }
 
         return null;
-
     }
+
     public Resource getConfig() { return config; }
 
     public Resource getMessages() { return messages; }

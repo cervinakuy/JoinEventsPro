@@ -18,8 +18,8 @@ import org.bukkit.inventory.meta.FireworkMeta;
 
 public class JoinFirework implements Listener {
 
-	private Resources resources;
-	private DebugMode debug;
+	private final Resources resources;
+	private final DebugMode debug;
 
 	public JoinFirework(Game plugin) {
 		this.resources = plugin.getResources();
@@ -28,13 +28,12 @@ public class JoinFirework implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		
 		Player p = e.getPlayer();
 		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
 		Resource joinConfig = resources.getResourceByName(joinType);
 
-		if (joinConfig.getBoolean(joinType + ".Other.Firework") && p.hasPermission("jep." + joinType.toLowerCase() + ".firework")) {
-			
+		if (joinConfig.getBoolean(joinType + ".Other.Firework") &&
+				p.hasPermission("jep." + joinType.toLowerCase() + ".firework")) {
 		    Firework firework = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
 		    FireworkMeta fireworkMeta = firework.getFireworkMeta();
 		    FireworkEffect.Type type = FireworkEffect.Type.BALL;
@@ -57,16 +56,20 @@ public class JoinFirework implements Listener {
 		    random.nextInt(17);
 		    random.nextInt(17);
 
-		    FireworkEffect effect = FireworkEffect.builder().flicker(random.nextBoolean()).withColor(Color.RED).withFade(Color.BLUE).with(type).trail(random.nextBoolean()).build();
+		    FireworkEffect effect = FireworkEffect.builder()
+					.flicker(random.nextBoolean())
+					.withColor(Color.RED)
+					.withFade(Color.BLUE)
+					.with(type)
+					.trail(random.nextBoolean())
+					.build();
 		    fireworkMeta.addEffect(effect);
 
 		    int power = random.nextInt(2) + 1;
 
 		    fireworkMeta.setPower(power);
 		    firework.setFireworkMeta(fireworkMeta);
-			
 		}
-		
 	}
 
 }

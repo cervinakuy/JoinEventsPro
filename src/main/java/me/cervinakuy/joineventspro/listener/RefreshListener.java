@@ -14,9 +14,9 @@ import java.util.Random;
 
 public class RefreshListener implements Listener {
 
-	private Resource config;
-	private List<String> identifiers;
-	private Random random;
+	private final Resource config;
+	private final List<String> identifiers;
+	private final Random random;
 
 	public RefreshListener(Game plugin) {
 		this.config = plugin.getResources().getConfig();
@@ -30,30 +30,24 @@ public class RefreshListener implements Listener {
 				identifiers.add(identifier);
 			}
 		}
-
 	}
 
 	@EventHandler
 	public void onPing(ServerListPingEvent e) {
-
 		if (config.getBoolean("Server.MOTD.Options.Enabled")) {
-
-			String motdType = config.getBoolean("Server.MOTD.Options.Maintenance") ? "Maintenance" : identifiers.get(random.nextInt(identifiers.size()));
+			String motdType = config.getBoolean("Server.MOTD.Options.Maintenance") ?
+					"Maintenance" : identifiers.get(random.nextInt(identifiers.size()));
 			e.setMotd(getMOTDFromConfig("Server.MOTD.List." + motdType));
-
 		}
-		
-		e.setMaxPlayers(config.getBoolean("Server.Players.Unlimited") ? (Bukkit.getOnlinePlayers().size() + 1) : config.getInt("Server.Players.Max"));
-		
+
+		e.setMaxPlayers(config.getBoolean("Server.Players.Unlimited") ?
+				(Bukkit.getOnlinePlayers().size() + 1) : config.getInt("Server.Players.Max"));
 	}
 
 	private String getMOTDFromConfig(String path) {
-
 		String line1 = config.fetchString(path + ".Line-1");
 		String line2 = config.fetchString(path + ".Line-2");
-
 		return (line1 + "\n" + line2).replace("&", "\\u00A7");
-
 	}
 	
 }
