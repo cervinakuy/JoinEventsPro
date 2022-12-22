@@ -18,7 +18,6 @@ import java.util.function.BiConsumer;
 public class Updater {
 
     public enum VersionResponse {
-
         LATEST,
         FOUND_NEW,
         UNAVAILABLE

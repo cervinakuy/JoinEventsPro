@@ -1,10 +1,10 @@
 package me.cervinakuy.joineventspro.listener;
 
-import com.cryptomorin.xseries.XSound;
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
 import me.cervinakuy.joineventspro.util.Resource;
 import me.cervinakuy.joineventspro.util.Resources;
+import me.cervinakuy.joineventspro.util.Toolkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,15 +27,14 @@ public class JoinSound implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Sound";
 		
 		if (joinConfig.getBoolean(pathPrefix + ".Enabled") &&
 				p.hasPermission("jep." + joinType.toLowerCase() + ".sound")) {
 			for (Player all : Bukkit.getOnlinePlayers()) {
-				XSound.play(all, joinConfig.fetchString(pathPrefix + ".Sound") +
-						", 1, " +
+				Toolkit.playSoundToPlayer(all, joinConfig.fetchString(pathPrefix + ".Sound"),
 						joinConfig.getInt(pathPrefix + ".Pitch"));
 			}
 		}
@@ -47,8 +46,7 @@ public class JoinSound implements Listener {
 
 		if (config.getBoolean("Leave.Sound.Enabled") && p.hasPermission("jep.leave.sound")) {
 			for (Player all : Bukkit.getOnlinePlayers()) {
-				XSound.play(all, config.fetchString("Leave.Sound.Sound") +
-						", 1, " +
+				Toolkit.playSoundToPlayer(all, config.fetchString("Leave.Sound.Sound"),
 						config.getInt("Leave.Sound.Pitch"));
 			}
 		}

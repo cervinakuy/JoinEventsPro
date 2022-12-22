@@ -1,11 +1,11 @@
 package me.cervinakuy.joineventspro.util;
 
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import com.cryptomorin.xseries.XSound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -73,16 +73,6 @@ public class Toolkit {
 		}
  		return 500;
  	}
-	
- 	@SuppressWarnings("deprecation")
-	public static ItemStack getMainHandItem(Player p) {
- 		if (versionToNumber() == 18) {
- 			return p.getItemInHand();
- 		} else if (versionToNumber() > 18) {
- 			return p.getInventory().getItemInMainHand();
- 		}
- 		return p.getItemInHand();
- 	}
 
 	public static String translate(String s) {
 		return ChatColor.translateAlternateColorCodes('&', s);
@@ -136,9 +126,54 @@ public class Toolkit {
 		printToConsole("&7[&b&lKIT-PVP&7] &cInvalid material: " + materialName);
 		return new ItemStack(Toolkit.FALLBACK_MATERIAL);
 	}
-	
+
+	public static Sound safeSound(String soundName) {
+		Optional<XSound> soundOptional = XSound.matchXSound(soundName);
+		if (soundOptional.isPresent()) {
+			Sound sound = soundOptional.get().parseSound();
+			if (sound != null) {
+				return sound;
+			}
+		}
+		printToConsole("&7[&b&lJOINEVENTSPRO&7] &cInvalid sound: " + soundName);
+		return XSound.ENTITY_ENDER_DRAGON_HURT.parseSound();
+	}
+
+	public static boolean isNumeric(String potentialNumber) {
+		if (potentialNumber == null) {
+			return false;
+		}
+
+		try {
+			int integer = Integer.parseInt(potentialNumber);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static void printToConsole(String string) {
 		Bukkit.getConsoleSender().sendMessage(Toolkit.translate(string));
+	}
+
+	public static ItemStack getItemForInteraction(PlayerInteractEvent e) {
+		Player p = e.getPlayer();
+
+		if (versionToNumber() == 18) {
+			return p.getItemInHand();
+		}
+
+		EquipmentSlot slot = e.getHand() != null ? e.getHand() : EquipmentSlot.HAND;
+		return p.getInventory().getItem(slot);
+	}
+
+	public static String getJoinType(Player p, DebugMode debugMode) {
+		return (!p.hasPlayedBefore() || debugMode.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+	}
+
+	public static void playSoundToPlayer(Player p, String soundName, int pitch) {
+		p.playSound(p.getLocation(), Toolkit.safeSound(soundName), 1, pitch);
 	}
 
 }

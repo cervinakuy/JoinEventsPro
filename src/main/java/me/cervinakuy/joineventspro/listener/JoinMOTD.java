@@ -23,7 +23,7 @@ public class JoinMOTD implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 		
 		if (joinConfig.getBoolean(joinType + ".MOTD.Enabled") &&
