@@ -6,6 +6,7 @@ import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
 import me.cervinakuy.joineventspro.util.Resource;
 import me.cervinakuy.joineventspro.util.Resources;
+import me.cervinakuy.joineventspro.util.Toolkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.EntityType;
@@ -29,7 +30,7 @@ public class JoinFirework implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 
 		if (joinConfig.getBoolean(joinType + ".Other.Firework") &&

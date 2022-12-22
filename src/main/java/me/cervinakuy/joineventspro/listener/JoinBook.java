@@ -1,6 +1,5 @@
 package me.cervinakuy.joineventspro.listener;
 
-import com.cryptomorin.xseries.XMaterial;
 import me.cervinakuy.joineventspro.Game;
 import me.cervinakuy.joineventspro.util.DebugMode;
 import me.cervinakuy.joineventspro.util.Resource;
@@ -26,14 +25,14 @@ public class JoinBook implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 		String pathPrefix = joinType + ".Book";
 
 		if (joinConfig.getBoolean(pathPrefix + ".Enabled") &&
 				p.hasPermission("jep." + joinType.toLowerCase() + ".book")) {
 
-			ItemStack book = XMaterial.WRITTEN_BOOK.parseItem();
+			ItemStack book = Toolkit.safeItemStack("WRITTEN_BOOK", 1);
 			BookMeta bookMeta = (BookMeta) book.getItemMeta();
 			int bookSlot = joinConfig.getInt(pathPrefix + ".Information.Slot");
 
@@ -45,7 +44,6 @@ public class JoinBook implements Listener {
 			book.setItemMeta(bookMeta);
 			p.getInventory().setItem(bookSlot, book);
 		}
-		
 	}
 	
 }

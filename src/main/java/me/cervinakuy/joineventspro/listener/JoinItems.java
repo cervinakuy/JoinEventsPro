@@ -27,7 +27,7 @@ public class JoinItems implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 
 		if (joinConfig.getBoolean(joinType + ".Items.Enabled") &&
@@ -63,7 +63,7 @@ public class JoinItems implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		String joinType = (!p.hasPlayedBefore() || debug.isDebugUser(p.getName())) ? "FirstJoin" : "Join";
+		String joinType = Toolkit.getJoinType(p, debug);
 		Resource joinConfig = resources.getResourceByName(joinType);
 
 		if (!joinConfig.getBoolean(joinType + ".Items.Enabled")) {
@@ -71,8 +71,8 @@ public class JoinItems implements Listener {
 		}
 
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) {
-			ItemStack mainHand = Toolkit.getMainHandItem(p);
-			if (!mainHand.hasItemMeta()) {
+			ItemStack handItem = Toolkit.getItemForInteraction(e);
+			if (!handItem.hasItemMeta()) {
 				return;
 			}
 
@@ -87,9 +87,9 @@ public class JoinItems implements Listener {
 				Material joinItemMaterial = XMaterial.matchXMaterial(
 						joinConfig.fetchString(pathPrefix + ".Material")).get().parseMaterial();
 
-				if (mainHand.getType() == joinItemMaterial) {
-					if (mainHand.getItemMeta().hasDisplayName() &&
-							mainHand.getItemMeta().getDisplayName()
+				if (handItem.getType() == joinItemMaterial) {
+					if (handItem.getItemMeta().hasDisplayName() &&
+							handItem.getItemMeta().getDisplayName()
 									.equals(joinConfig.fetchString(pathPrefix + ".Name"))) {
 						Toolkit.runCommands(p, joinConfig.getStringList(pathPrefix + ".Commands"));
 					}

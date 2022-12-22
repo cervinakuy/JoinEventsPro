@@ -21,7 +21,6 @@ import me.cervinakuy.joineventspro.listener.RefreshListener;
 
 public class Game extends JavaPlugin {
 
-	private static Game instance;
 	private Resources resources;
 	private DebugMode debugMode;
 
@@ -31,8 +30,7 @@ public class Game extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		
-		instance = this;
+
 		this.resources = new Resources(this);
 		this.debugMode = new DebugMode();
 
@@ -99,8 +97,6 @@ public class Game extends JavaPlugin {
 	public DebugMode getDebugMode() { return debugMode; }
 
 	public Resources getResources() { return resources; }
-
-	public static Game getInstance() { return instance; }
 
 	public static String getPrefix() { return prefix; }
 	

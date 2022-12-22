@@ -51,7 +51,6 @@ public class Resources {
         } else if (resourceName.equalsIgnoreCase("firstjoin")) {
             return firstJoin;
         }
-
         return null;
     }
 
