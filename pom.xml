@@ -6,7 +6,7 @@
 
     <groupId>me.cervinakuy</groupId>
     <artifactId>JoinEventsPro</artifactId>
-    <version>4.3</version>
+    <version>4.5</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
