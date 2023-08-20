@@ -4,12 +4,16 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.cervinakuy.joineventspro.Game;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
+import static net.md_5.bungee.api.ChatColor.COLOR_CHAR;
 
 public class Resource extends YamlConfiguration {
 
@@ -95,13 +99,8 @@ public class Resource extends YamlConfiguration {
     public String fetchString(String path) {
         String string = super.getString(path);
 
-        if (string != null) {
-            string = ChatColor.translateAlternateColorCodes('&',
-                    string.replace("%prefix%", Game.getPrefix() == null ? "" : Game.getPrefix()));
-        } else {
-            string = "String not found";
-            Toolkit.printToConsole(String.format("&7[&b&lJOINEVENTSPRO7] &cString with path %s was not found.", path));
-        }
+        string = translateHexColorCodes(string);
+        //string.replace("%prefix%", Game.getPrefix() == null ? "" : Game.getPrefix());
 
         return string;
     }
@@ -113,13 +112,27 @@ public class Resource extends YamlConfiguration {
         if (originalList != null) {
             List<String> colorizedList = new ArrayList<>();
             for (String line : originalList) {
-                colorizedList.add(ChatColor.translateAlternateColorCodes('&', line));
+                colorizedList.add(translateHexColorCodes(line));
             }
             return colorizedList;
         }
 
         return originalList;
 
+    }
+    public String translateHexColorCodes(String message)
+    {
+        Pattern pattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
+        Matcher matcher = pattern.matcher(message);
+
+        while (matcher.find()) {
+            String color = message.substring(matcher.start(), matcher.end());
+            message = message.replace(color, ChatColor.of(color) + "");
+            matcher = pattern.matcher(message);
+        }
+        System.out.println(matcher);
+        System.out.println(message);
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public String getName() { return name; }
