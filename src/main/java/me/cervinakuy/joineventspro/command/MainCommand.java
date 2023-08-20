@@ -158,7 +158,7 @@ public class MainCommand implements CommandExecutor {
 	}
 
 	private void executeSetMaxPlayersCommand(CommandSender sender, String[] args) {
-		if (!Toolkit.isNumeric(args[1])) {
+		if (isNumeric(args[1])) {
 			sender.sendMessage(messages.fetchString("Messages.Error.Number"));
 			return;
 		}
@@ -215,6 +215,17 @@ public class MainCommand implements CommandExecutor {
 		sender.sendMessage(messages.fetchString("Messages.General.Permission"));
 		return false;
 
+	}
+	public static boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false;
+		}
+		try {
+			double d = Double.parseDouble(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 	
 }
